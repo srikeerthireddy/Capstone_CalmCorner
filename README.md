@@ -28,8 +28,8 @@ Our mission is simple: to empower individuals to take proactive steps towards ma
 | ---  | ---  |
 | Week1|
        -  Submitting a project idea + plan
-       -  Creating a low fid design
-       -  Created a high fid design
+       -  Creating a low-fid design
+       -  Created a high-fid design
 
 | Week2|
        -  Setting up a Github project
