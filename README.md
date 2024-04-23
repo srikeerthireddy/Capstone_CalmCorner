@@ -27,16 +27,14 @@ Our mission is simple: to empower individuals to take proactive steps towards ma
 | Week  | Plan                                                                                        |
 |-------|---------------------------------------------------------------------------------------------|
 | Week1 | - Submitting a project idea + plan<br>- Creating a low-fid design<br>- Created a high-fid design |
-| Week2 | - Setting up a Github project<br>- Manage all daily tasks and project milestone progress via github projects |
-| Week3 | - GET API used<br>- POST API used                                                             |
-| Week4 | - PUT API used<br>- Deployed backend server                                                  |
-| Week5 | - Database schema created<br>- Database read and write performed                             |
-| Week6 | - Implemented relationship between entities in database<br>- Initialized a react/frontened application |
-| Week7 | - Deployed frontened Server<br>- Created frontened components in react                       |
-| Week8 | - Matching design and end state<br>- Implemented file upload functionality in the application  |
-| Week9 | - Implemented authentication (username/password) in application<br>- Implemented authentication (3rd party-like google) in application |
-| Week10| - Implementing 'update' and 'delete' an entity in React app<br>- Updated bruno/API templates in application repo |
-| Week11| - Using JWTs in application                                                                  |
+| Week2 | - Setting up a Github project<br>- Manage all daily tasks and project milestone progress via GitHub Projects<br>- GET API used|
+| Week3 | - POST API used<br>- PUT API used<br>- Deployed backend server                               |
+| Week4 | - Database schema created<br>- Database read and write performed<br>- Implemented relationship between entities in database |
+| Week5 | - Initialized a React/frontend application<br>- Deployed frontend server<br>- Created frontend components in React |
+| Week6 | - Matching design and end state<br>- Implemented file upload functionality in the application<br>- Implemented authentication (username/password) in application |
+| Week7 | - Implemented authentication (3rd party-like Google) in application<br>- Implementing 'update' and 'delete' functionality for an entity in the React app<br>- Updated Bruno/API templates in the application repo |
+| Week8 | - Using JWTs in the application                                                                |
+                                                                |
 
 
 ## Tech Stack:
