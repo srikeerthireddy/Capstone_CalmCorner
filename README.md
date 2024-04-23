@@ -34,7 +34,6 @@ Our mission is simple: to empower individuals to take proactive steps towards ma
 | Week6 | - Matching design and end state<br>- Implemented file upload functionality in the application<br>- Implemented authentication (username/password) in application |
 | Week7 | - Implemented authentication (3rd party-like Google) in application<br>- Implementing 'update' and 'delete' functionality for an entity in the React app<br>- Updated Bruno/API templates in the application repo |
 | Week8 | - Using JWTs in the application                                                                |
-                                                                |
 
 
 ## Tech Stack:
