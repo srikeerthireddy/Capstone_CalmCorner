@@ -26,4 +26,12 @@ router.post('/EntryCreate',async (req,res)=>{
     }
     
 });
+router.get('/EntryRead',async (req,res)=>{
+    try{
+        const moodEntries=await moodEntryModel.find();
+        res.status(201).json({message:"MoodEntries retrieved successfully"});
+    }catch(error){
+        res.status(400).json({message:error.message});
+    }
+})
 module.exports=router;
