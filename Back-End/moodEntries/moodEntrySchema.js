@@ -10,7 +10,7 @@ const moodEntrySchema=mongoose.Schema({
         required:true
     },
     Date:{
-        type:Date,
+        type:String,
         required:true
     },
     Time: {
