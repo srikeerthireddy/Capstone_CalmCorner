@@ -14,4 +14,12 @@ router.post('/create', async (req,res)=>{
         res.status(400).json({message:error.message});
     }
 });
+router.get('/read',async (req,res)=>{
+    try{
+        const resources=await resourceModel.find();
+        res.status(201).json({message:"Resources retrieving from the database",resources});
+    }catch(error){
+        res.status(400).json({message:error.message});
+    }
+})
 module.exports=router;
