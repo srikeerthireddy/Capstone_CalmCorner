@@ -18,6 +18,9 @@ function MoodEntryForm() {
     EmotionEcho: ''
   });
 
+  const [error,setError]=useState('');
+
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === 'checkbox') {
@@ -67,8 +70,10 @@ function MoodEntryForm() {
         },
         EmotionEcho: ''
       });
+      setError('');
     } catch (error) {
       console.error('Error adding the mood entry', error);
+      setError('There was a problem submitting your mood entry. Please try again.');
     }
   };
 
@@ -78,6 +83,7 @@ function MoodEntryForm() {
         <div>
           <h1>Mood Entry</h1>
         </div>
+        {error && <div style={{ color: 'red' }}>{error}</div>}
         <div>
           <label>Name:</label>
           <input type="text" name="Name" value={formData.Name} onChange={handleChange} required />
