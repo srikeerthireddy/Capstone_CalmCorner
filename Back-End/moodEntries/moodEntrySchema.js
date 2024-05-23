@@ -33,5 +33,5 @@ const moodEntrySchema=mongoose.Schema({
         required: true
     }
 });
-const moodEntryModel=mongoose.model('moodEntries',moodEntrySchema);
+const moodEntryModel=mongoose.model('moodentries', moodEntrySchema);
 module.exports=moodEntryModel;
