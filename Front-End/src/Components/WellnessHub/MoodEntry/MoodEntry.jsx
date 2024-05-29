@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
+import './MoodEntry.css';
 
 function MoodEntryForm() {
   const [formData, setFormData] = useState({
@@ -18,8 +19,7 @@ function MoodEntryForm() {
     EmotionEcho: ''
   });
 
-  const [error,setError]=useState('');
-
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -78,62 +78,63 @@ function MoodEntryForm() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <h1>Mood Entry</h1>
-        </div>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <div>
-          <label>Name:</label>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} className="mood-entry-form">
+        <h1>Daily Mood Entry</h1>
+        {error && <div className="error-message">{error}</div>}
+        <div className="form-group">
+          <label>👉🏻 Name:</label>
           <input type="text" name="Name" value={formData.Name} onChange={handleChange} required />
         </div>
-        <div>
-          <label>Location:</label>
+        <div className="form-group">
+          <label>🗾Location:</label>
           <input type="text" name="Location" value={formData.Location} onChange={handleChange} required />
         </div>
-        <div>
-          <label>Date:</label>
+        <div className="form-group">
+          <label>🗓 Date:</label>
           <input type="text" name="Date" value={formData.Date} onChange={handleChange} required />
         </div>
-        <div>
-          <label>Time:</label>
+        <div className="form-group">
+          <label>🕛Time:</label>
           <input type="text" name="Time" value={formData.Time} onChange={handleChange} required />
         </div>
-        <fieldset>
+        <fieldset className="form-group">
           <legend>Mood Selection:</legend>
           <label>
-            Happy
+           😄 Happy
             <input type="checkbox" name="Happy" checked={formData.MoodSelection.Happy} onChange={handleChange} />
           </label>
           <label>
-            Sad
+           😔  Sad
             <input type="checkbox" name="Sad" checked={formData.MoodSelection.Sad} onChange={handleChange} />
           </label>
           <label>
-            Anxious
+            😰 Anxious
             <input type="checkbox" name="Anxious" checked={formData.MoodSelection.Anxious} onChange={handleChange} />
           </label>
           <label>
-            Stressed
+           🥵  Stressed
             <input type="checkbox" name="Stressed" checked={formData.MoodSelection.Stressed} onChange={handleChange} />
           </label>
           <label>
-            Neutral
+            😌 Neutral
             <input type="checkbox" name="Neutral" checked={formData.MoodSelection.Neutral} onChange={handleChange} />
           </label>
           <label>
-            Excited
+           🤩  Excited
             <input type="checkbox" name="Excited" checked={formData.MoodSelection.Excited} onChange={handleChange} />
           </label>
         </fieldset>
-        <div>
+        <div className="form-group">
           <label>Emotion Echo:</label>
           <textarea name="EmotionEcho" value={formData.EmotionEcho} onChange={handleChange} required />
         </div>
-        <button type="submit">Submit</button>
+        <div className='button-con'>
+        <button type="submit" className="submit-button">Submit</button>
+        </div>
+   
       </form>
-    </>
+    </div>
   );
 }
 

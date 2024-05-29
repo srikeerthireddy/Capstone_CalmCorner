@@ -7,6 +7,7 @@ import About from './Components/AboutUs/About';
 import WelnessHub from './Components/WellnessRoutes/Wellnesshub';
 import Login from './Components/Login/Login';
 import Signin from './Components/SignIn/Signin';
+import Footer from './Components/Footer/Footer';
 import './App.css';
 function App(){
     return(
@@ -21,6 +22,7 @@ function App(){
         <Route path="/signin" element={<Signin/>}/>
       </Routes>
       </Router>
+      <Footer/>
       
      
       </>

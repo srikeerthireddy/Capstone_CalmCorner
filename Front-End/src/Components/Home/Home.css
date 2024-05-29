@@ -1,0 +1,19 @@
+.image-container {
+    position: relative;
+  }
+  
+  .background-image {
+    width: 100%; 
+    height: auto; 
+  }
+  
+  .bottom-text {
+    position: absolute;
+    bottom: 20px;
+    left: 50%; 
+    transform: translateX(-50%); 
+    color:black;
+    text-align: center;
+    font-size: 24px; 
+  }
+  
