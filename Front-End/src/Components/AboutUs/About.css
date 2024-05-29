@@ -1,0 +1,52 @@
+body {
+  background-image: url('https://images.unsplash.com/photo-1554034483-04fda0d3507b?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHBsYWluJTIwY29sb3VyfGVufDB8fDB8fHww');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; 
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 10px auto;
+  padding: 20px;
+  color: #333;
+  background: rgba(250, 249, 249, 0.9); 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.about-container h1 {
+  text-align: center;
+  color: rgb(6, 191, 99);
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.about-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.about-section .about-text,
+.about-section .about-image {
+  flex: 1;
+  padding: 20px;
+}
+
+.about-section .about-image img {
+  width: 100%; /* Ensures the image fills its container */
+  height: auto; /* Maintains aspect ratio */
+  border-radius: 10px;
+  max-width: 450px; /* Set the maximum width for the image */
+}
+
+.about-container p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 20px;
+}

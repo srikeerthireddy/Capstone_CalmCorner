@@ -1,0 +1,88 @@
+/* Container for the signin box */
+.signin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Styling for the signin box */
+  .signin-box {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Increased width for a larger box */
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+  }
+  
+  /* Heading styling */
+  .signin-box h1 {
+    margin-bottom: 1.5rem;
+    color: #6dbf9b;
+  }
+  
+  /* Form group styling */
+  .signin-box .signin-form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  /* Label styling */
+  .signin-box label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  /* Input field styling */
+  .signin-box input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+  }
+  
+  /* Button styling */
+  .signin-box .signin-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #a35ac3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width:300px;
+
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signin-box .signin-button:hover {
+    background-color: #75a0dd;
+  }
+  
+  /* Paragraph and link styling */
+  .signin-box p {
+    margin-top: 1rem;
+    color: #333;
+  }
+  
+  .signin-box a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .signin-box a:hover {
+    text-decoration: underline;
+  }
+  
+  .signup {
+    font-size: 20px;
+  }
+  

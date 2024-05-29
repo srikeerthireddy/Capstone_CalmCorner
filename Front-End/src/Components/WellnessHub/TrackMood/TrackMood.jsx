@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
+import './TrackMood.css';
 
 function DisplayMoodEntries() {
   const [moodEntries, setMoodEntries] = useState([]);
@@ -27,48 +28,64 @@ function DisplayMoodEntries() {
 
   return (
     <div>
-      <h1>Mood Entries</h1>
-      <ul>
+      <h1 className='mood-h1'>Mood Entry Tracker</h1>
+      <div className="mood-entries-container">
         {moodEntries && moodEntries.map((entry) => (
-          <li key={entry._id}>
-            <p><strong>Name:</strong> {entry.Name}</p>
-            <p><strong>Location:</strong> {entry.Location}</p>
-            <p><strong>Date:</strong> {entry.Date}</p>
-            <p><strong>Time:</strong> {entry.Time}</p>
-            <fieldset>
-              <legend>Mood Selection:</legend>
-              <label>
-                Happy
-                <input type="checkbox" name="Happy" checked={entry.MoodSelection.Happy} readOnly />
-              </label>
-              <label>
-                Sad
-                <input type="checkbox" name="Sad" checked={entry.MoodSelection.Sad} readOnly />
-              </label>
-              <label>
-                Anxious
-                <input type="checkbox" name="Anxious" checked={entry.MoodSelection.Anxious} readOnly />
-              </label>
-              <label>
-                Stressed
-                <input type="checkbox" name="Stressed" checked={entry.MoodSelection.Stressed} readOnly />
-              </label>
-              <label>
-                Neutral
-                <input type="checkbox" name="Neutral" checked={entry.MoodSelection.Neutral} readOnly />
-              </label>
-              <label>
-                Excited
-                <input type="checkbox" name="Excited" checked={entry.MoodSelection.Excited} readOnly />
-              </label>
-            </fieldset>
-            <p><strong>Emotion Echo:</strong> {entry.EmotionEcho}</p>
-          </li>
+          <div className="mood-entry" key={entry._id}>
+            <p className='name'>{entry.Name} </p>
+            <div className='one-line'>
+            <div className='location-flex'>
+            <p className='location'>{entry.Location}</p>
+            </div>
+            
+            
+            <div className='track-flex'>
+              
+            <p>{entry.Date} </p>
+            <p>{entry.Time} </p>
+            </div>
+            </div>
+           
+            <div className='mood-flex'>
+            <div className="mood-selection">
+              <p>{getSelectedMoods(entry.MoodSelection)}</p>
+            </div>
+            <p className='emotion'>{entry.EmotionEcho} </p>
+            </div>
+           
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
+function getSelectedMoods(moodSelection) {
+  const selectedMoods = [];
+  for (const mood in moodSelection) {
+    if (moodSelection[mood]) {
+      selectedMoods.push(getEmojiForMood(mood));
+    }
+  }
+  return selectedMoods.join(' ');
+}
+
+function getEmojiForMood(mood) {
+  switch (mood) {
+    case 'Happy':
+      return '😄Happy  ';
+    case 'Sad':
+      return '😔Sad  ';
+    case 'Anxious':
+      return '😰Anxious ';
+    case 'Stressed':
+      return '🥵Stressed ';
+    case 'Neutral':
+      return '😌Neutral ';
+    case 'Excited':
+      return '🤩Excited ';
+    default:
+      return '';
+  }
+}
 
 export default DisplayMoodEntries;
-
