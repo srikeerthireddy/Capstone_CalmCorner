@@ -35,5 +35,20 @@ router.post('/logout',async (req,res)=>{
         res.status(500).send({ error: "Internal server error" });
     }
     
-})
+});
+router.get('/user', async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        const user = await userModel.find();
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ user });
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 module.exports=router;
