@@ -1,9 +1,13 @@
 const express=require("express");
 const router=express.Router();
 const userModel=require('../User/userSchema');
-
+const {registerSchema,loginSchema}=require('../User/Validation');
 router.post('/signin',async (req,res)=>{
     try{
+        const { error } = registerSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
         const {username,emailId,password}=req.body;
         const newUser=await userModel.create({username,emailId,password});
         res.status(201).json({message:'User created successfully',user:newUser});
@@ -13,8 +17,13 @@ router.post('/signin',async (req,res)=>{
 });
 
 router.post('/login',async (req,res)=>{
+    const { error } = loginSchema.validate(req.body);
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+    }
     const {username,emailId,password}=req.body;
     try{
+       
         const user=await userModel.findOne({username});
         if(!user){
             return res.status(404).json({message:"User not found"});
