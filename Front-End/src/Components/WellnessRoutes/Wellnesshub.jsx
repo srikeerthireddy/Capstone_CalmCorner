@@ -5,6 +5,7 @@ import MoodEntry from '../WellnessHub/MoodEntry/MoodEntry';
 import TrackMood from '../WellnessHub/TrackMood/TrackMood';
 import Resources from '../WellnessHub/Resources/Resources';
 import WellnessTips from '../WellnessHub/WellnessTips/WellnessTips';
+import UpdateRender from '../WellnessHub/UpdateEntry/UpdateEntry';
 import './Wellnesshub.css';
 
 function Wellnesshub() {
@@ -26,6 +27,7 @@ function Wellnesshub() {
             <Route path="track-mood" element={<TrackMood />} />
             <Route path="resources" element={<Resources />} />
             <Route path="wellness-tips" element={<WellnessTips />} />
+            <Route path="update" element={<UpdateRender/>}/>
           </Routes>
         </div>
       </div>
