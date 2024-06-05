@@ -2,6 +2,8 @@ const express=require("express");
 const router=express.Router();
 const userModel=require('../User/userSchema');
 const {registerSchema,loginSchema}=require('../User/Validation');
+const bcrypt=require("bcrypt");
+const jwt=require("jsonwebtoken");
 router.post('/signin',async (req,res)=>{
     try{
         const { error } = registerSchema.validate(req.body);
@@ -9,8 +11,11 @@ router.post('/signin',async (req,res)=>{
             return res.status(400).json({ message: error.details[0].message });
         }
         const {username,emailId,password}=req.body;
-        const newUser=await userModel.create({username,emailId,password});
-        res.status(201).json({message:'User created successfully',user:newUser});
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser=await userModel.create({username,emailId,password:hashedPassword});
+        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        
+        res.status(201).json({message:'User created successfully',token,user:newUser});
     }catch(error){
         res.status(400).json({message:error.message});
     }
@@ -28,10 +33,15 @@ router.post('/login',async (req,res)=>{
         if(!user){
             return res.status(404).json({message:"User not found"});
         }
-        if(user.password!==password){
-                return res.status(401).json({message:"Invalid credentials"});
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: "Invalid credentials" });
         }
-        res.status(200).json({message:"Login successful"});
+
+        // Generate JWT token
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.cookie("token",token,{httpOnly:true});
+        res.status(200).json({message:"Login successful",token});
         
     }catch(error){
         res.status(400).json({message:error.message});
@@ -39,6 +49,7 @@ router.post('/login',async (req,res)=>{
 });
 router.post('/logout',async (req,res)=>{
     try{
+        res.clearCookie("token"); // Clear the "token" cookie
         res.status(200).json({message:'Logout successful'});
     }catch(error){
         res.status(500).send({ error: "Internal server error" });

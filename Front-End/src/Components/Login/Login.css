@@ -42,7 +42,7 @@
 .login-box input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 3px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box; /* Ensure padding is included in the total width */
@@ -82,4 +82,32 @@
 }
 .sign{
   font-size: 20px;
+}
+.message-con{
+  display: flex;
+  justify-content: center;
+}
+.message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.message.success {
+  background-color: #9082f9;
+  color: #007bb2;
+  border: 1px solid #007bb2;
+  width: 300px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.message.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #c62828;
 }
