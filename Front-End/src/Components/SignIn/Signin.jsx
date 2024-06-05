@@ -15,22 +15,38 @@ function Signin() {
   const handleChange = (e, field) => {
     setSignInUser({ ...signInUser, [field]: e.target.value });
   };
+  const [selectedFile, setSelectedFile] = useState(null);
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+};
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append('username', signInUser.username);
+  formData.append('emailId', signInUser.emailId);
+  formData.append('password', signInUser.password);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5226/api/users/signin', signInUser);
-    
+  if (selectedFile) {
+      formData.append('profilePicture', selectedFile);
+  }
+
+  try {
+      const response = await axios.post('http://localhost:5226/api/users/signin', formData, {
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+      });
+
       setMessage(response.data.message);
       setIsSuccess(response.status === 201);
-     
-      console.log("User signin sucessfull")
-    } catch (error) {
+      console.log("User signed in successfully");
+  } catch (error) {
       setMessage(error.response.data.message);
       setIsSuccess(false);
       console.error('An error occurred while signing in', error);
-    }
-  };
+  }
+};
+
 
   return (
     <div className="signin-container">
@@ -76,6 +92,10 @@ function Signin() {
               onChange={(e) => handleChange(e, 'password')}
               required
             />
+          </div>
+          <div>
+          <label className="register-label">Upload your file:</label>
+                        <input className="register-input" type="file" onChange={handleFileChange} />
           </div>
           <button type="submit" className="signin-button">Sign In</button>
         </form>

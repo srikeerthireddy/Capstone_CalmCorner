@@ -1,10 +1,31 @@
 const express=require("express");
 const router=express.Router();
 const userModel=require('../User/userSchema');
+const multer = require("multer");
 const {registerSchema,loginSchema}=require('../User/Validation');
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
-router.post('/signin',async (req,res)=>{
+const path = require('path');
+const fs = require('fs');
+
+const uploadsDir = path.join(__dirname,'../uploads');
+if(!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir);
+}
+
+// Multer storage configuration
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/'); // Uploads directory
+    },
+    filename: function(req, file, cb) {
+        // Generate unique filename
+        cb(null, Date.now() + '-' + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
+router.post('/signin',upload.single('profilePicture'),async (req,res)=>{
     try{
         const { error } = registerSchema.validate(req.body);
         if (error) {
@@ -12,7 +33,7 @@ router.post('/signin',async (req,res)=>{
         }
         const {username,emailId,password}=req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser=await userModel.create({username,emailId,password:hashedPassword});
+        const newUser=await userModel.create({username,emailId,password:hashedPassword,profilePicture: req.file ? req.file.path : null});
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         
         res.status(201).json({message:'User created successfully',token,user:newUser});
