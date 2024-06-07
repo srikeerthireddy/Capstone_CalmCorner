@@ -17,9 +17,21 @@ const UpdateRender = () => {
   }
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      MoodSelection: {
+        ...prevState.MoodSelection,
+        [name]: checked,
+      },
     }));
   };
 
@@ -66,7 +78,7 @@ const UpdateRender = () => {
               type="checkbox"
               name="Happy"
               checked={formData.MoodSelection.Happy}
-              onChange={handleChange}
+              onChange={handleCheckboxChange}
             />
           </label>
           <label>
@@ -75,7 +87,7 @@ const UpdateRender = () => {
               type="checkbox"
               name="Sad"
               checked={formData.MoodSelection.Sad}
-              onChange={handleChange}
+              onChange={handleCheckboxChange}
             />
           </label>
           <label>
@@ -84,7 +96,7 @@ const UpdateRender = () => {
               type="checkbox"
               name="Anxious"
               checked={formData.MoodSelection.Anxious}
-              onChange={handleChange}
+              onChange={handleCheckboxChange}
             />
           </label>
           <label>
@@ -93,7 +105,7 @@ const UpdateRender = () => {
               type="checkbox"
               name="Stressed"
               checked={formData.MoodSelection.Stressed}
-              onChange={handleChange}
+              onChange={handleCheckboxChange}
             />
           </label>
           <label>
@@ -102,7 +114,7 @@ const UpdateRender = () => {
               type="checkbox"
               name="Neutral"
               checked={formData.MoodSelection.Neutral}
-              onChange={handleChange}
+              onChange={handleCheckboxChange}
             />
           </label>
           <label>
@@ -111,7 +123,7 @@ const UpdateRender = () => {
               type="checkbox"
               name="Excited"
               checked={formData.MoodSelection.Excited}
-              onChange={handleChange}
+              onChange={handleCheckboxChange}
             />
           </label>
         </fieldset>
