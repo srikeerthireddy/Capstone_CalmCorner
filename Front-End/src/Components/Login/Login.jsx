@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Login.css'; // Import the CSS file
 import Cookies from 'js-cookie';
+
 function Login() {
   const [loginUser, setLoginUser] = useState({
     username: '',
@@ -25,11 +26,9 @@ function Login() {
       setMessage(response.data.message);
       setIsSuccess(response.status === 200);
       console.log("User logged in successfully!...");
-      // localStorage.setItem('token', response.data.token);
-      // Cookies.set('token', response.data.token);
-      if(response.status==200){
-        console.log("successful login",loginUser.username)
-        Cookies.set("username",loginUser.username);
+      if (response.status === 200) {
+        console.log("successful login", loginUser.username);
+        Cookies.set("username", loginUser.username);
       }
     } catch (error) {
       setMessage(error.response.data.message);
@@ -38,17 +37,20 @@ function Login() {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5226/auth/google";
+  };
+
   return (
     <div className="login-container">
-      
       <div className="login-box">
-      {message && (
-        <div className="message-succ">
-          <div className={`message ${isSuccess ? 'success' : 'error'}`}>
-            <p>{message}</p>
+        {message && (
+          <div className="message-succ">
+            <div className={`message ${isSuccess ? 'success' : 'error'}`}>
+              <p>{message}</p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -83,6 +85,17 @@ function Login() {
           </div>
           <button type="submit" className="login-button">Login</button>
         </form>
+        <div className='google-btn'>
+        <button onClick={handleGoogleLogin} className="google-login-button">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/2504/2504914.png"
+            alt="Google logo"
+            className="google-logo"
+          />
+          Continue with Google
+        </button>
+        </div>
+        
         <p className="sign">Don't have an account? <Link to="/signin">Sign In</Link></p>
       </div>
     </div>
