@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
-
+const GoogleAuth=require('./GoogleAuth/GoogleAuth');
 // const routes=require('./routes');
 const userRoute=require('./User/userRoutes');
 const resourceRoute=require('./resources/resourcesRoutes');
@@ -29,6 +29,7 @@ app.use('/api/users',userRoute);
 app.use('/api/resource',resourceRoute);
 app.use('/api/moodEntry',moodEntryRoute);
 
+app.use(GoogleAuth);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
