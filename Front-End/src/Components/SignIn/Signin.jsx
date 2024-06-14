@@ -4,6 +4,7 @@ import axios from 'axios';
 import './SignIn.css'; 
 
 function Signin() {
+
   const [signInUser, setSignInUser] = useState({
     username: '',
     emailId: '',
@@ -46,6 +47,10 @@ const handleSubmit = async (e) => {
       console.error('An error occurred while signing in', error);
   }
 };
+
+const handleGoogleLogin = () =>{
+  window.location.href= "http://localhost:5226/auth/google/callback"
+}
 
 
   return (
@@ -98,6 +103,7 @@ const handleSubmit = async (e) => {
                         <input className="register-input" type="file" onChange={handleFileChange} />
           </div>
           <button type="submit" className="signin-button">Sign In</button>
+          <button onClick={handleGoogleLogin}>Continue with Google</button>
         </form>
       </div>
     </div>
