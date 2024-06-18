@@ -8,11 +8,12 @@ import WelnessHub from './Components/WellnessRoutes/Wellnesshub';
 import Login from './Components/Login/Login';
 import Signin from './Components/SignIn/Signin';
 import Footer from './Components/Footer/Footer';
+import { AuthProvider } from './Components/AuthContext/AuthContext';
 import './App.css';
 function App(){
     return(
-      <>
-      <Router>
+      <AuthProvider>
+<Router>
       <Header/>
       <Routes>
         <Route path="/" element={ <Home/>}/>
@@ -21,11 +22,12 @@ function App(){
         <Route path="/login" element={ <Login/>}/>
         <Route path="/signin" element={<Signin/>}/>
       </Routes>
-      </Router>
+     
       <Footer/>
+      </Router>
+      </AuthProvider>
       
      
-      </>
     )
 }
 export default App;

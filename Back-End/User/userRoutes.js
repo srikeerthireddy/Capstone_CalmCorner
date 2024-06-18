@@ -72,6 +72,7 @@ router.post('/logout',async (req,res)=>{
     try{
         res.clearCookie("token"); // Clear the "token" cookie
         res.status(200).json({message:'Logout successful'});
+        console.log("User Logout successfully");
     }catch(error){
         res.status(500).send({ error: "Internal server error" });
     }
