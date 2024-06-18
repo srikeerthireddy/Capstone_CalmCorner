@@ -1,17 +1,18 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './TrackMood.css';
 
-function DisplayMoodEntries() {
+function TrackMood() {
   const [moodEntries, setMoodEntries] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMoodEntries = async () => {
       try {
         const response = await fetch('http://localhost:5226/api/moodEntry/EntryRead');
         const data = await response.json();
-        console.log("from fetch", data);
         if (!Array.isArray(data.moodEntries)) {
           throw new Error('Unexpected data format');
         }
@@ -26,39 +27,57 @@ function DisplayMoodEntries() {
 
   if (error) return <div>Error: {error}</div>;
 
+  const handleUpdate = (entry) => {
+    navigate('/wellnesshub/update', { state: entry });
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5226/api/moodEntry/EntryDelete/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete entry');
+      }
+      setMoodEntries(moodEntries.filter(entry => entry._id !== id));
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <div>
       <h1 className='mood-h1'>Mood Entry Tracker</h1>
       <div className="mood-entries-container">
-        {moodEntries && moodEntries.map((entry) => (
+        {moodEntries.map((entry) => (
           <div className="mood-entry" key={entry._id}>
-            <p className='name'>{entry.Name} </p>
+            <p className='name'>{entry.Name}</p>
             <div className='one-line'>
-            <div className='location-flex'>
-            <p className='location'>{entry.Location}</p>
+              <div className='location-flex'>
+                <p className='location'>{entry.Location}</p>
+              </div>
+              <div className='track-flex'>
+                <p>{entry.Date}</p>
+                <p>{entry.Time}</p>
+              </div>
             </div>
-            
-            
-            <div className='track-flex'>
-              
-            <p>{entry.Date} </p>
-            <p>{entry.Time} </p>
-            </div>
-            </div>
-           
             <div className='mood-flex'>
-            <div className="mood-selection">
-              <p>{getSelectedMoods(entry.MoodSelection)}</p>
+              <div className="mood-selection">
+                <p>{getSelectedMoods(entry.MoodSelection)}</p>
+              </div>
+              <p className='emotion'>{entry.EmotionEcho}</p>
             </div>
-            <p className='emotion'>{entry.EmotionEcho} </p>
+            <div className='buttons'>
+              <button onClick={() => handleUpdate(entry)}>Update</button>
+              <button onClick={() => handleDelete(entry._id)}>Delete</button>
             </div>
-           
           </div>
         ))}
       </div>
     </div>
   );
 }
+
 function getSelectedMoods(moodSelection) {
   const selectedMoods = [];
   for (const mood in moodSelection) {
@@ -88,4 +107,4 @@ function getEmojiForMood(mood) {
   }
 }
 
-export default DisplayMoodEntries;
+export default TrackMood;
