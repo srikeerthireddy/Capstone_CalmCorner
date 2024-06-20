@@ -1,20 +1,27 @@
-// axios.js
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+// Create an instance of axios with default settings
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5226/api',
-  withCredentials: true,
+  baseURL: 'http://localhost:5226/api', // Base URL for your API
+  withCredentials: true, // To send cookies with requests
 });
 
-axiosInstance.interceptors.request.use((config) => {
-  const token = Cookies.get('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+// Interceptor to include the token in headers of all requests
+axiosInstance.interceptors.request.use(
+  (config) => {
+    // Get the token from cookies
+    const token = Cookies.get('token');
+    if (token) {
+      // Set the Authorization header if token exists
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    // Handle request error
+    return Promise.reject(error);
   }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+);
 
 export default axiosInstance;

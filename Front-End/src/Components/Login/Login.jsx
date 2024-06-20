@@ -80,15 +80,17 @@ function Login() {
         loginUser
       );
       const data = response.data;
+      console.log(data)
 
       if (response.status === 200) {
-        const { token, username, emailId } = data; // Extract token, username, and email from response
+        const { token } = data; // Extract token, username, and email from response
+        // console.log()
         Cookies.set("token", token); // Store token in cookies
-        Cookies.set("username", username); // Store username in cookies
-        Cookies.set("emailId", emailId); // Store email in cookies
+        // Cookies.set("username", username); // Store username in cookies
+        // Cookies.set("emailId", emailId); // Store email in cookies
 
-        setUsername(username);
-        setEmail(emailId);
+        // setUsername(username);
+        // setEmail(emailId);
 
         login(token); // Call the login function with the token
         setMessage(data.message);
@@ -105,6 +107,7 @@ function Login() {
       setIsSuccess(false);
       console.error("An error occurred while logging in:", error);
     }
+    
   };
 
   const handleGoogleLogin = () => {

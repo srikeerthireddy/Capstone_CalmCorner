@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../axios/axios'; // Import your Axios instance
+import axios from 'axios';
 import './TrackMood.css';
 
 function TrackMood() {
@@ -9,15 +9,30 @@ function TrackMood() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
+console.log(moodEntries)
   useEffect(() => {
     const fetchMoodEntries = async () => {
       try {
-        const response = await axiosInstance.get('/moodEntry/EntryRead'); // Use axiosInstance to fetch data
+        const token = getCookie("token");
+        const response = await axios.get(
+          "http://localhost:5226/api/moodEntry/userEntry",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const data = response.data;
-        if (!Array.isArray(data.moodEntries)) {
-          throw new Error('Unexpected data format');
-        }
-        setMoodEntries(data.moodEntries);
+        // if (!Array.isArray(data.moodEntries)) {
+        //   throw new Error("Unexpected data format");
+        // }
+        console.log(data)
+        setMoodEntries(data.moodEntry);
       } catch (error) {
         setError(error.message);
       }
@@ -32,7 +47,15 @@ function TrackMood() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axiosInstance.delete(`/moodEntry/EntryDelete/${id}`); // Use axiosInstance to delete entry
+      const token = getCookie("token");
+      const response = await axios.delete(
+        `http://localhost:5226/api/moodEntry/EntryDelete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.status !== 200) {
         throw new Error('Failed to delete entry');
       }
@@ -107,3 +130,5 @@ function getEmojiForMood(mood) {
 }
 
 export default TrackMood;
+
+     
