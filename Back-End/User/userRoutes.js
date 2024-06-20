@@ -42,32 +42,36 @@ router.post('/signin',upload.single('profilePicture'),async (req,res)=>{
     }
 });
 
-router.post('/login',async (req,res)=>{
+router.post('/login', async (req, res) => {
     const { error } = loginSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
-    const {username,emailId,password}=req.body;
-    try{
-       
-        const user=await userModel.findOne({username});
-        if(!user){
-            return res.status(404).json({message:"User not found"});
+
+    const { username, password } = req.body;
+    try {
+        const user = await userModel.findOne({ username });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
+
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        // Generate JWT token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.cookie("token",token,{httpOnly:true});
-        res.status(200).json({message:"Login successful",token});
-        
-    }catch(error){
-        res.status(400).json({message:error.message});
+        const token = jwt.sign(
+            { userId: user._id, username: user.username, emailId: user.emailId },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+        res.cookie("token", token, { httpOnly: true });
+        res.status(200).json({ message: "Login successful", token });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 });
+
 router.post('/logout',async (req,res)=>{
     try{
         res.clearCookie("token"); // Clear the "token" cookie

@@ -1,22 +1,72 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
-// eslint-disable-next-line react/no-unescaped-entities
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useContext } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import './Login.css'; // Import the CSS file
-import Cookies from 'js-cookie';
-import AuthContext from '../AuthContext/AuthContext';
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "./Login.css"; // Import the CSS file
+import Cookies from "js-cookie";
+import AuthContext from "../AuthContext/AuthContext";
 
 function Login() {
   const [loginUser, setLoginUser] = useState({
-    username: '',
-    emailId: '',
-    password: ''
+    username: "",
+    emailId: "",
+    password: "",
   });
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const { login } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const fetchAuthorFromToken = async () => {
+      try {
+        const token = getCookie("token");
+        if (token) {
+          const base64Url = token.split(".")[1];
+          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split("")
+              .map((c) => {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join("")
+          );
+
+          const decodedToken = JSON.parse(jsonPayload);
+
+          console.log("Decoded Token:", decodedToken);
+
+          if (decodedToken.username) {
+            const { username, emailId } = decodedToken;
+            setUsername(username);
+            setEmail(emailId);
+            setIsSuccess(true); // Set login success state
+          } else {
+            console.error("Decoded token does not contain a valid username.");
+            setError("Failed to load user information.");
+          }
+        }
+      } catch (error) {
+        console.error(
+          "Error decoding token or fetching user information:",
+          error
+        );
+        setError("Failed to load user information.");
+      }
+    };
+
+    fetchAuthorFromToken();
+  }, []);
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
 
   const handleChange = (e, field) => {
     setLoginUser({ ...loginUser, [field]: e.target.value });
@@ -25,24 +75,40 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5226/api/users/login', loginUser);
-      setMessage(response.data.message);
-      setIsSuccess(response.status === 200);
+      const response = await axios.post(
+        "http://localhost:5226/api/users/login",
+        loginUser
+      );
+      const data = response.data;
+
       if (response.status === 200) {
-        Cookies.set('username', loginUser.username);
-        Cookies.set('emailId', loginUser.emailId);
-        console.log(`User ${loginUser.username} and emailId ${loginUser.emailId} logged in successfully!`);
-        login(loginUser.username, loginUser.emailId);
+        const { token, username, emailId } = data; // Extract token, username, and email from response
+        Cookies.set("token", token); // Store token in cookies
+        Cookies.set("username", username); // Store username in cookies
+        Cookies.set("emailId", emailId); // Store email in cookies
+
+        setUsername(username);
+        setEmail(emailId);
+
+        login(token); // Call the login function with the token
+        setMessage(data.message);
+        setIsSuccess(true);
+      } else {
+        setMessage(data.message);
+        setIsSuccess(false);
       }
     } catch (error) {
-      setMessage(error.response.data.message);
+      setMessage(
+        error.response?.data?.message ||
+          "An error occurred while logging in. Please try again."
+      );
       setIsSuccess(false);
-      console.error('An error occurred while logging in', error);
+      console.error("An error occurred while logging in:", error);
     }
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:5226/auth/google';
+    window.location.href = "http://localhost:5226/auth/google";
   };
 
   return (
@@ -50,7 +116,7 @@ function Login() {
       <div className="login-box">
         {message && (
           <div className="message-succ">
-            <div className={`message ${isSuccess ? 'success' : 'error'}`}>
+            <div className={`message ${isSuccess ? "success" : "error"}`}>
               <p>{message}</p>
             </div>
           </div>
@@ -63,7 +129,7 @@ function Login() {
               type="text"
               id="username"
               value={loginUser.username}
-              onChange={(e) => handleChange(e, 'username')}
+              onChange={(e) => handleChange(e, "username")}
               required
             />
           </div>
@@ -73,7 +139,7 @@ function Login() {
               type="email"
               id="email"
               value={loginUser.emailId}
-              onChange={(e) => handleChange(e, 'emailId')}
+              onChange={(e) => handleChange(e, "emailId")}
               required
             />
           </div>
@@ -83,7 +149,7 @@ function Login() {
               type="password"
               id="password"
               value={loginUser.password}
-              onChange={(e) => handleChange(e, 'password')}
+              onChange={(e) => handleChange(e, "password")}
               required
             />
           </div>

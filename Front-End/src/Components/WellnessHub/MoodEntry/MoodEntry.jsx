@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
+import axiosInstance from '../axios/axios'; // Ensure this is the correct path to your axios instance
 import './MoodEntry.css';
 
 function MoodEntryForm() {
@@ -42,18 +43,11 @@ function MoodEntryForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5226/api/moodEntry/EntryCreate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
-      if (!response.ok) {
+      const response = await axiosInstance.post('/moodEntry/EntryCreate', formData);
+      if (response.status !== 200) {
         throw new Error('Failed to add mood entry');
       }
-      const data = await response.json();
-      console.log('Mood entry added successfully', data);
+      console.log('Mood entry added successfully', response.data);
 
       setFormData({
         Name: '',
@@ -92,11 +86,11 @@ function MoodEntryForm() {
         </div>
         <div className="form-group">
           <label>🗓 Date:</label>
-          <input type="text" name="Date" value={formData.Date} onChange={handleChange} required />
+          <input type="date" name="Date" value={formData.Date} onChange={handleChange} required />
         </div>
         <div className="form-group">
           <label>🕛Time:</label>
-          <input type="text" name="Time" value={formData.Time} onChange={handleChange} required />
+          <input type="time" name="Time" value={formData.Time} onChange={handleChange} required />
         </div>
         <fieldset className="form-group">
           <legend>Mood Selection:</legend>
@@ -132,7 +126,6 @@ function MoodEntryForm() {
         <div className='button-con'>
         <button type="submit" className="submit-button">Submit</button>
         </div>
-   
       </form>
     </div>
   );

@@ -7,8 +7,7 @@ const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
-  const [emailId, setEmailId] = useState('');
+
 
   useEffect(() => {
     // Check for user cookie on mount
@@ -17,8 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     if (storedUsername && storedEmailId) {
       setIsLoggedIn(true);
-      setUsername(storedUsername);
-      setEmailId(storedEmailId); // Set emailId if available
+
     }
   }, []);
 
@@ -26,27 +24,22 @@ export const AuthProvider = ({ children }) => {
     Cookies.set('username', username);
     Cookies.set('emailId', emailId); // Store emailId in cookies
     setIsLoggedIn(true);
-    setUsername(username);
-    setEmailId(emailId);
+  
   };
 
   const logout = () => {
-    const loggedOutUsername = username; // Capture username before clearing state
+
     Cookies.remove('username');
     Cookies.remove('emailId'); // Remove emailId from cookies on logout
     setIsLoggedIn(false);
-    setUsername('');
-    setEmailId(''); // Clear emailId from state
-    console.log(`User ${loggedOutUsername} logged out successfully!`);
+ 
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, username, emailId }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout}}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export default AuthContext;
-
-

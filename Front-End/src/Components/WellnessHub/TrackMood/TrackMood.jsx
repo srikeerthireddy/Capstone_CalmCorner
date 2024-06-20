@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../axios/axios'; // Import your Axios instance
 import './TrackMood.css';
 
 function TrackMood() {
@@ -11,8 +12,8 @@ function TrackMood() {
   useEffect(() => {
     const fetchMoodEntries = async () => {
       try {
-        const response = await fetch('http://localhost:5226/api/moodEntry/EntryRead');
-        const data = await response.json();
+        const response = await axiosInstance.get('/moodEntry/EntryRead'); // Use axiosInstance to fetch data
+        const data = response.data;
         if (!Array.isArray(data.moodEntries)) {
           throw new Error('Unexpected data format');
         }
@@ -25,18 +26,14 @@ function TrackMood() {
     fetchMoodEntries();
   }, []);
 
-  if (error) return <div>Error: {error}</div>;
-
   const handleUpdate = (entry) => {
     navigate('/wellnesshub/update', { state: entry });
   };
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5226/api/moodEntry/EntryDelete/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
+      const response = await axiosInstance.delete(`/moodEntry/EntryDelete/${id}`); // Use axiosInstance to delete entry
+      if (response.status !== 200) {
         throw new Error('Failed to delete entry');
       }
       setMoodEntries(moodEntries.filter(entry => entry._id !== id));
@@ -44,6 +41,8 @@ function TrackMood() {
       setError(error.message);
     }
   };
+
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>

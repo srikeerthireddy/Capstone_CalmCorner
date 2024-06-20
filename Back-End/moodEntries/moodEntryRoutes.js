@@ -1,30 +1,30 @@
 const express=require('express');
 const router=express.Router();
+const authenticate=require('../middleware/authenticate');
 const moodEntryModel=require('./moodEntrySchema');
-router.post('/EntryCreate',async (req,res)=>{
-    const {
-        Name,
-        Location,
-        Date,
-        Time,
-        MoodSelection,
-        EmotionEcho
-    }=req.body;
-    try{
-        const moodEntry=new moodEntryModel({
-           Name,
-           Location,
-           Date,
-           Time,
-           MoodSelection,
-           EmotionEcho
-        });
-        const newMoodEntry=await moodEntry.save();
-        res.status(201).json({message:"Mood Entry created successfully",moodEntry:newMoodEntry});
-    }catch(error){
-        res.status(400).json({message:error.message});
-    }
-    
+router.post('/EntryCreate', authenticate, async (req, res) => {
+  try {
+      const { Name, Location, Date, Time, MoodSelection, EmotionEcho } = req.body;
+      const userId = req.user.userId; // Get userId from the authenticated user
+
+      // Create a new mood entry
+      const newMoodEntry = new moodEntryModel({
+          Name,
+          Location,
+          Date,
+          Time,
+          MoodSelection,
+          EmotionEcho,
+          userId
+      });
+
+      // Save the mood entry to the database
+      await newMoodEntry.save();
+
+      res.status(201).json({ message: 'Mood entry created successfully', moodEntry: newMoodEntry });
+  } catch (error) {
+      res.status(400).json({ message: error.message });
+  }
 });
 router.get('/EntryRead',async (req,res)=>{
     try{
