@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './TrackMood.css';
 
 function TrackMood() {
@@ -8,15 +9,30 @@ function TrackMood() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
+console.log(moodEntries)
   useEffect(() => {
     const fetchMoodEntries = async () => {
       try {
-        const response = await fetch('http://localhost:5226/api/moodEntry/EntryRead');
-        const data = await response.json();
-        if (!Array.isArray(data.moodEntries)) {
-          throw new Error('Unexpected data format');
-        }
-        setMoodEntries(data.moodEntries);
+        const token = getCookie("token");
+        const response = await axios.get(
+          "http://localhost:5226/api/moodEntry/userEntry",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = response.data;
+        // if (!Array.isArray(data.moodEntries)) {
+        //   throw new Error("Unexpected data format");
+        // }
+        console.log(data)
+        setMoodEntries(data.moodEntry);
       } catch (error) {
         setError(error.message);
       }
@@ -25,18 +41,22 @@ function TrackMood() {
     fetchMoodEntries();
   }, []);
 
-  if (error) return <div>Error: {error}</div>;
-
   const handleUpdate = (entry) => {
     navigate('/wellnesshub/update', { state: entry });
   };
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5226/api/moodEntry/EntryDelete/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
+      const token = getCookie("token");
+      const response = await axios.delete(
+        `http://localhost:5226/api/moodEntry/EntryDelete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status !== 200) {
         throw new Error('Failed to delete entry');
       }
       setMoodEntries(moodEntries.filter(entry => entry._id !== id));
@@ -44,6 +64,8 @@ function TrackMood() {
       setError(error.message);
     }
   };
+
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
@@ -108,3 +130,5 @@ function getEmojiForMood(mood) {
 }
 
 export default TrackMood;
+
+     
