@@ -17,7 +17,7 @@ const auth = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     // console.log(decoded)
-    req.user = decoded.user; // Attach the decoded user to the request object
+    req.user = decoded; // Attach the decoded user to the request object
     next();
   } catch (error) {
     console.error('Invalid token:', error);
