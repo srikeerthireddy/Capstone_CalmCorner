@@ -20,7 +20,7 @@ console.log(moodEntries)
       try {
         const token = getCookie("token");
         const response = await axios.get(
-          "http://localhost:5226/api/moodEntry/userEntry",
+          "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/moodEntry/userEntry",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ console.log(moodEntries)
     try {
       const token = getCookie("token");
       const response = await axios.delete(
-        `http://localhost:5226/api/moodEntry/EntryDelete/${id}`,
+        `https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/moodEntry/EntryDelete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -11,7 +11,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:5226/auth/google/callback",
+      callbackURL: "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/auth/google/callback",
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(profile);
@@ -49,10 +49,10 @@ Auth.get(
 Auth.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:5226/api/users/signin",
+    failureRedirect: "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/users/signin",
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173/");
+    res.redirect("https://s61-srikeerthi-capstone-calmcorner-5.onrender.com");
   }
 );
 

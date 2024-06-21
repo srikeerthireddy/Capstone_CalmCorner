@@ -74,7 +74,7 @@ function MoodEntryForm() {
     // console.log(formData)
     try {
       const response = await axiosInstance.post(
-        "http://localhost:5226/api/moodEntry/EntryCreate",
+        "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/moodEntry/EntryCreate",
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
