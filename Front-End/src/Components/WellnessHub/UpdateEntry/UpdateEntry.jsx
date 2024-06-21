@@ -38,7 +38,7 @@ const UpdateRender = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5226/api/moodEntry/EntryUpdate/${formData._id}`, formData)
+      .put(`https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/moodEntry/EntryUpdate/${formData._id}`, formData)
       .then((res) => {
         console.log("Entity updated successfully", res.data);
         navigate('/wellnesshub/track-mood');

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 // Create an instance of axios with default settings
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5226/api', // Base URL for your API
+  baseURL: 'https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api', // Base URL for your API
   withCredentials: true, // To send cookies with requests
 });
 
