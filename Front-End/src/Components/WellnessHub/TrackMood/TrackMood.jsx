@@ -130,5 +130,3 @@ function getEmojiForMood(mood) {
 }
 
 export default TrackMood;
-
-     
