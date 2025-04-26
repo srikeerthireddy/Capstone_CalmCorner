@@ -91,7 +91,12 @@ const port = 5226;
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+// Set up CORS with specific origin and credentials
+const corsOptions = {
+    origin: 'https://calmcorner-red.vercel.app', // frontend origin
+    credentials: true, // allow credentials (cookies, authorization headers)
+  };
+  app.use(cors(corsOptions));
 app.use(cookieParser());
 
 
