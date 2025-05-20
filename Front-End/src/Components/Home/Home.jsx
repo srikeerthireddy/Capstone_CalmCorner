@@ -25,7 +25,7 @@ function Home() {
       {/* About Section */}
       <section className="about-section">
         <h2>Your Mental Wellbeing Matters</h2>
-        <p>We provide resources, support, and community to help you navigate life's challenges and build resilience. Everyone deserves access to mental health care that's compassionate, effective, and personalized.</p>
+        <p>We provide resources, support, and community to help you navigate life is challenges and build resilience. Everyone deserves access to mental health care that's compassionate, effective, and personalized.</p>
         
         <div className="stats-container">
           <div className="stat-card">
