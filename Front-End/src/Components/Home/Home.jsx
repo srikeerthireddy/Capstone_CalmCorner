@@ -1,103 +1,90 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Home.css';
+import React from "react";
+import "./Home.css";
+import { FaHeartbeat, FaUserFriends, FaBrain } from "react-icons/fa";
 
 function Home() {
-  const navigate = useNavigate();
   return (
     <div className="home-container">
       {/* Hero Section */}
-      <div className="hero-section">
-        <div className="image-container">
-          <img 
-            src="https://www.makemebetter.net/wp-content/uploads/2021/06/MMB-IMAGE-JPG-8-2.jpg" 
-            alt="Person meditating peacefully" 
-            className="background-image"
-          />
-          <div className="hero-content">
-            <h1 className="hero-title">You are resilient, you are unstoppable</h1>
-            <p className="hero-subtitle">Your mental health journey matters</p>
-            <button className="cta-button">Get Support Now</button>
+      <section className="home-hero-section">
+        <div className="home-image-container">
+          <img src="https://www.makemebetter.net/wp-content/uploads/2021/06/MMB-IMAGE-JPG-8-2.jpg" alt="Mental wellness" className="home-background-image" />
+          <div className="home-hero-content">
+            <h1 className="home-hero-title">Your Mental Wellness Journey Starts Here</h1>
+            <p className="home-hero-subtitle">Support, Resources, and Community for a Healthier Mind</p>
+            <button className="home-cta-button">Get Started</button>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* About Section */}
-      <section className="about-section">
-        <h2>Your Mental Wellbeing Matters</h2>
-        <p>We provide resources, support, and community to help you navigate life is challenges and build resilience. Everyone deserves access to mental health care that's compassionate, effective, and personalized.</p>
-        
-        <div className="stats-container">
-          <div className="stat-card">
+      <section className="home-about-section">
+        <h2>Why Mental Health Matters</h2>
+        <p className="home-about-paragraph">
+          Mental health affects how we think, feel, and act. It also helps determine how we handle stress, relate to others, and make choices. Taking care of your mental health is just as important as your physical health.
+        </p>
+        <div className="home-stats-container">
+          <div className="home-stat-card">
             <h3>1 in 5</h3>
-            <p>Adults experience mental health challenges each year</p>
+            <p>adults experience mental illness each year</p>
           </div>
-          <div className="stat-card">
+          <div className="home-stat-card">
             <h3>50%</h3>
-            <p>Of mental health conditions begin by age 14</p>
+            <p>of all lifetime mental illness begins by age 14</p>
           </div>
-          <div className="stat-card">
-            <h3>80%</h3>
-            <p>Of people can recover with proper support</p>
+          <div className="home-stat-card">
+            <h3>46%</h3>
+            <p>of Americans will meet criteria for a mental health condition</p>
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="services-section">
-        <h2>How We Can Help</h2>
-        <div className="services-grid">
-          <div className="service-card">
-            <div className="service-icon">🧠</div>
-            <h3>Therapy Resources</h3>
-            <p>Connect with licensed therapists and counselors who specialize in different mental health concerns.</p>
+      <section className="home-services-section">
+        <h2 className="home-heading">Our Services</h2>
+        <div className="home-services-grid">
+          <div className="home-service-card">
+            <FaHeartbeat className="home-service-icon" />
+            <h3>Self-Care Guidance</h3>
+            <p>Tips and routines to help you care for your mental well-being.</p>
           </div>
-          <div className="service-card">
-            <div className="service-icon">📚</div>
-            <h3>Educational Materials</h3>
-            <p>Access evidence-based information about various mental health conditions and coping strategies.</p>
+          <div className="home-service-card">
+            <FaUserFriends className="home-service-icon" />
+            <h3>Community Support</h3>
+            <p>Connect with others who understand your journey.</p>
           </div>
-          <div className="service-card">
-            <div className="service-icon">👥</div>
-            <h3>Support Groups</h3>
-            <p>Join virtual and in-person communities where you can share experiences and find understanding.</p>
-          </div>
-          <div className="service-card">
-            <div className="service-icon">🧘</div>
-            <h3>Self-Care Tools</h3>
-            <p>Discover practical techniques for stress management, mindfulness, and improving your daily wellbeing.</p>
+          <div className="home-service-card">
+            <FaBrain className="home-service-icon" />
+            <h3>Expert Resources</h3>
+            <p>Access to articles and advice from mental health professionals.</p>
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="testimonials-section">
-        <h2>Stories of Hope</h2>
-        <div className="testimonials-container">
-          <div className="testimonial-card">
-            <p>"Finding this resource changed everything for me. I finally had the tools I needed to understand my anxiety and start healing."</p>
-            <h4>- Sarah K.</h4>
+      <section className="home-testimonials-section">
+        <h2 className="home-heading">What Our Users Say</h2>
+        <div className="home-testimonials-container">
+          <div className="home-testimonial-card">
+            <p>"This platform helped me find the right tools to manage my anxiety. I'm so grateful!"</p>
+            <h4>— Alex</h4>
           </div>
-          <div className="testimonial-card">
-            <p>"The support community here helped me realize I wasn't alone in my struggles. That was the first step toward my recovery."</p>
-            <h4>- Michael T.</h4>
-          </div>
-          <div className="testimonial-card">
-            <p>"I was skeptical at first, but the resources provided here gave me practical ways to manage my depression that actually worked."</p>
-            <h4>- Jamie L.</h4>
+          <div className="home-testimonial-card">
+            <p>"Being able to connect with others going through similar challenges made all the difference."</p>
+            <h4>— Jamie</h4>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="cta-section">
+      {/* Call to Action Section */}
+      <section className="home-cta-section">
         <h2>Start Your Journey Today</h2>
-        <p>Taking the first step is often the hardest part. We're here to walk alongside you.</p>
-        <div className="cta-buttons">
-          <button onClick={()=> navigate('/signup')} className="secondary-button">Join Our Community</button>
+        <p>You’re not alone. Join our supportive community and take control of your mental well-being.</p>
+        <div className="home-cta-buttons">
+          <button className="home-cta-button">Join Now</button>
+          <button className="home-secondary-button">Learn More</button>
         </div>
       </section>
-
     </div>
   );
 }
