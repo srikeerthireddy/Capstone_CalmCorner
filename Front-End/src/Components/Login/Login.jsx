@@ -48,7 +48,7 @@ function Login() {
             setUsername(username);
             setEmail(emailId);
             setIsSuccess(true); // Set login success state
-            navigate('/wellnesshub')
+            navigate('/')
           } else {
             console.error("Decoded token does not contain a valid username.");
             setError("Failed to load user information.");
