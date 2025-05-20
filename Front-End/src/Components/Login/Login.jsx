@@ -7,10 +7,9 @@ import { Link } from "react-router-dom";
 import "./Login.css"; // Import the CSS file
 import Cookies from "js-cookie";
 import AuthContext from "../AuthContext/AuthContext";
-import { useNavigate } from "react-router-dom";
+
 
 function Login() {
-  const navigate = useNavigate();
   const [loginUser, setLoginUser] = useState({
     username: "",
     emailId: "",
@@ -48,7 +47,6 @@ function Login() {
             setUsername(username);
             setEmail(emailId);
             setIsSuccess(true); // Set login success state
-            navigate('/')
           } else {
             console.error("Decoded token does not contain a valid username.");
             setError("Failed to load user information.");
