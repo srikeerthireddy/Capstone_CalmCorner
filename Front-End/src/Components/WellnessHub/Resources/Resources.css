@@ -1,188 +1,57 @@
-/* Resources.css */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap');
-
 .main-que-ans-con {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 30px 20px;
-  background: linear-gradient(to bottom right, #f9f9ff, #ffffff);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  font-family: 'Quicksand', sans-serif;
-}
-
-.question-con,
-.main-que-ans-con > div {
-  margin-bottom: 15px;
-}
-
-/* Style for accordion items */
-.Names {
-  border: none !important;
-  margin-bottom: 15px;
-}
-
-.NamesItem {
-  border: none !important;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.NamesItem:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-/* Style for accordion buttons */
-.NamesButton {
-  padding: 16px 20px !important;
-  background-color: #ffffff !important;
-  color: #4a5568 !important;
-  font-weight: 600 !important;
-  font-size: 17px !important;
-  transition: all 0.3s ease !important;
-  border-radius: 12px !important;
-  border-bottom: none !important;
-}
-
-.NamesButton:hover {
-  background-color: #f7fafc !important;
-  color: #6366f1 !important;
-}
-
-.NamesButton[aria-expanded="true"] {
-  background-color: #6366f1 !important;
-  color: white !important;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
-
-/* Accordion icon styling */
-.NamesButton svg {
-  color: #6366f1;
-  font-size: 20px;
-  transition: transform 0.3s ease;
-}
-
-.NamesButton[aria-expanded="true"] svg {
-  transform: rotate(-180deg);
-  color: white;
-}
-
-/* Style for accordion panels */
-.NamesPanel {
-  background-color: #ffffff;
-  padding: 20px 25px !important;
-  color: #4a5568;
-  line-height: 1.6;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  position: relative;
-}
-
-.NamesPanel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 20px;
-  right: 20px;
-  height: 1px;
-  background-color: #e2e8f0;
-}
-
-/* Style for list items */
-.NamesPanel ul {
-  list-style-type: none;
-  padding-left: 0;
-  margin-top: 10px;
-}
-
-.NamesPanel li {
-  position: relative;
-  padding-left: 28px;
-  margin-bottom: 12px;
-  font-size: 16px;
-}
-
-.NamesPanel li:last-child {
-  margin-bottom: 0;
-}
-
-.NamesPanel li::before {
-  content: '•';
-  position: absolute;
-  left: 8px;
-  color: #6366f1;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* Add a page header */
-.main-que-ans-con::before {
-  content: 'Wellness Resources';
-  display: block;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 600;
-  color: #4a5568;
-  margin-bottom: 30px;
-  background: linear-gradient(to right, #6366f1, #7c3aed);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Add a subtle intro text */
-.main-que-ans-con::after {
-  content: 'Find helpful information and strategies for improving your mental wellbeing';
-  display: block;
-  text-align: center;
-  font-size: 16px;
-  color: #718096;
-  margin-bottom: 30px;
-  padding: 0 20px;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .main-que-ans-con {
-    padding: 20px 15px;
-    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .question-con, .Names {
+    width: 100%;
+    max-width: 600px;
+    margin: 10px 0;
+  }
+  
+  .NamesItem {
+    width: 600px;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
   }
   
   .NamesButton {
-    padding: 14px 16px !important;
-    font-size: 16px !important;
+    background-color: #f7fafc;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    flex: 0 0 auto;
+    
+  }
+  
+  .NamesButton:hover {
+    background-color: #e2e8f0;
   }
   
   .NamesPanel {
-    padding: 15px 20px !important;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #fff;
+    padding: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+    border-radius: 20px;
+    flex: 1 1 auto;
+    margin-left:20px;
+    margin-right:20px;
+    margin-bottom: 10px;
+    overflow-y: auto; /* Add scroll if content overflows */
   }
   
-  .main-que-ans-con::before {
-    font-size: 28px;
+  ul {
+    list-style-type: disc;
+    padding-left: 20px;
   }
   
-  .main-que-ans-con::after {
-    font-size: 14px;
-  }
-}
-
-/* Animation for accordion panel */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.NamesPanel {
-  animation: fadeIn 0.3s ease forwards;
-}
