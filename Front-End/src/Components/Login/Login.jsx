@@ -76,7 +76,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5226/api/users/login",
+        "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/users/login",
         loginUser
       );
       const data = response.data;
