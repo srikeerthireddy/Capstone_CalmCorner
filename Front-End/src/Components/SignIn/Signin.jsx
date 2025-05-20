@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./SignIn.css";
+import {useNavigate} from 'react-router-dom'
+
 
 function Signin() {
+  const navigate = useNavigate()
   const [signInUser, setSignInUser] = useState({
     username: "",
     emailId: "",
@@ -44,6 +47,7 @@ function Signin() {
       setMessage(response.data.message);
       setIsSuccess(response.status === 201);
       console.log("User signed in successfully");
+      navigate('/login')
     } catch (error) {
       setMessage(error.response.data.message);
       setIsSuccess(false);
@@ -66,13 +70,14 @@ function Signin() {
           )}
         </div>
 
-        <h1>Sign In</h1>
+        <h1>Create your Account</h1>
         <form onSubmit={handleSubmit}>
           <div className="signin-form-group">
             <label htmlFor="username">USER NAME</label>
             <input
               type="text"
               id="username"
+              placeholder="username"
               value={signInUser.username}
               onChange={(e) => handleChange(e, "username")}
               required
@@ -83,6 +88,7 @@ function Signin() {
             <input
               type="email"
               id="email"
+placeholder="email"
               value={signInUser.emailId}
               onChange={(e) => handleChange(e, "emailId")}
               required
@@ -93,6 +99,7 @@ function Signin() {
             <input
               type="password"
               id="password"
+              placeholder="******"
               value={signInUser.password}
               onChange={(e) => handleChange(e, "password")}
               required
@@ -111,8 +118,10 @@ function Signin() {
             />
           </div>
           <button type="submit" className="signin-button">
-            Sign In
+            Sign Up
           </button>
+
+          <p className="login">Already have an account?<span  onClick={()=> navigate('/login')}> signin</span></p>
           <div className="google-auth">
           <button type="button" onClick={handleGoogleLogin} className="google-login-button">
             <img

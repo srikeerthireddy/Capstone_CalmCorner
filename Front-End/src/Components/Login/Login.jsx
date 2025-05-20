@@ -166,7 +166,7 @@ function Login() {
         </div>
 
         <p className="sign">
-          Don't have an account? <Link to="/signin">Sign In</Link>
+          Don't have an account? <Link to="/signup">Sign In</Link>
         </p>
       </div>
     </div>
