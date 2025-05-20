@@ -100,7 +100,7 @@ function Header() {
               ABOUT US
             </NavLink>
             <NavLink 
-              to="/wellness-hub" 
+              to="/wellnesshub" 
               className={({ isActive }) => 
                 isActive ? "nav-link active" : "nav-link"
               }
@@ -215,7 +215,7 @@ function Header() {
               ABOUT US
             </NavLink>
             <NavLink
-              to="/wellness-hub"
+              to="/wellnesshub"
               className={({ isActive }) =>
                 isActive
                   ? "mobile-nav-link active"
