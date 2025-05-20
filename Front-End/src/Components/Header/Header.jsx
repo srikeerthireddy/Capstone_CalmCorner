@@ -193,17 +193,6 @@ function Header() {
         <div className="mobile-menu">
           <div className="mobile-menu-items">
             <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? "mobile-nav-link active"
-                  : "mobile-nav-link"
-              }
-              onClick={() => setMenuOpen(false)}
-            >
-              HOME
-            </NavLink>
-            <NavLink
               to="/about"
               className={({ isActive }) =>
                 isActive
