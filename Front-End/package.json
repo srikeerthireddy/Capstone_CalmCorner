@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/styled": "^11.11.5",
     "@nextui-org/react": "^2.4.0",
+    "@tailwindcss/vite": "^4.1.7",
     "axios": "^1.6.8",
     "firebase": "^10.12.2",
     "framer-motion": "^11.2.6",
@@ -22,7 +23,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
     "react-player": "^2.16.0",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
