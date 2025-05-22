@@ -1,536 +1,269 @@
-/* eslint-disable react/no-unescaped-entities */
-// eslint-disable-next-line no-unused-vars
 import React from "react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-} from "@chakra-ui/react";
-import "./Resources.css";
+import { ChevronDown, Brain, Heart, Moon, Coffee, Smile, BookOpen, Users, Clock, Leaf, MessageSquare, Sun, Sparkles, Lightbulb, Compass, Laugh, HeartHandshake, BatteryCharging, Trees } from 'lucide-react';
 
-function Resources() {
+export default function Resources() {
+  const faqs = [
+    {
+      question: "How do I manage stress in my daily life?",
+      answer: [
+        "Deep breathing exercises",
+        "Mindfulness meditation",
+        "Regular physical activity",
+        "Maintaining a healthy diet",
+        "Setting boundaries",
+        "Seeking support from friends, family, or a mental health professional"
+      ],
+      icon: <Brain className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are some tips for improving sleep quality?",
+      answer: [
+        "Establish a consistent sleep schedule",
+        "Create a relaxing bedtime routine",
+        "Make your sleep environment comfortable and conducive to sleep",
+        "Limit exposure to screens before bed",
+        "Avoid caffeine and large meals close to bedtime",
+        "Manage stress through relaxation techniques"
+      ],
+      icon: <Moon className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are some strategies to reduce stress at work?",
+      answer: [
+        "Prioritize tasks",
+        "Set boundaries",
+        "Take short breaks",
+        "Practice time management",
+        "Seek support from colleagues or supervisors"
+      ],
+      icon: <Coffee className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "How can I incorporate mindfulness into my daily routine?",
+      answer: [
+        "Practice mindfulness meditation",
+        "Focus on the present moment",
+        "Engage in mindful activities such as walking or eating",
+        "Bring awareness to your thoughts and emotions without judgment"
+      ],
+      icon: <Sparkles className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are some effective relaxation techniques for stress relief?",
+      answer: [
+        "Deep breathing exercises",
+        "Progressive muscle relaxation",
+        "Guided imagery",
+        "Aromatherapy",
+        "Listening to calming music or nature sounds"
+      ],
+      icon: <Heart className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What role does nutrition play in stress management?",
+      answer: [
+        "Providing the body with essential nutrients",
+        "Stabilizing blood sugar levels",
+        "Supporting brain health",
+        "Influencing mood-regulating neurotransmitters like serotonin and dopamine"
+      ],
+      icon: <Leaf className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "How can I set realistic goals to reduce stress?",
+      answer: [
+        "Break larger tasks into smaller, manageable steps",
+        "Prioritize tasks based on importance and urgency",
+        "Set specific and achievable deadlines",
+        "Celebrate progress along the way"
+      ],
+      icon: <Compass className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are the benefits of practicing gratitude for mental well-being?",
+      answer: [
+        "Promoting positive emotions",
+        "Reducing stress and anxiety",
+        "Enhancing resilience",
+        "Strengthening relationships",
+        "Fostering a sense of contentment and fulfillment"
+      ],
+      icon: <Smile className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are some self-care practices for maintaining mental health?",
+      answer: [
+        "Engaging in activities you enjoy",
+        "Setting aside time for relaxation and leisure",
+        "Getting enough sleep",
+        "Eating nutritious foods",
+        "Staying physically active",
+        "Seeking professional help when needed"
+      ],
+      icon: <HeartHandshake className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are some effective coping strategies for dealing with unexpected challenges?",
+      answer: [
+        "Maintaining a positive outlook",
+        "Staying flexible and adaptable",
+        "Seeking solutions rather than dwelling on problems",
+        "Practicing self-compassion",
+        "Reaching out for support from others when needed"
+      ],
+      icon: <Lightbulb className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "How does journaling help in managing stress and emotions?",
+      answer: [
+        "Providing a safe outlet for expressing thoughts and feelings",
+        "Gaining insight into triggers and patterns",
+        "Organizing thoughts",
+        "Problem-solving",
+        "Promoting self-reflection and self-awareness"
+      ],
+      icon: <BookOpen className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are some mindfulness exercises I can practice throughout the day?",
+      answer: [
+        "Mindful breathing",
+        "Body scan meditation",
+        "Mindful walking",
+        "Mindful eating",
+        "Taking mindful pauses to check in with your thoughts, emotions, and sensations"
+      ],
+      icon: <Sun className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "How can I create a supportive and stress-free work environment?",
+      answer: [
+        "Fostering open communication",
+        "Encouraging collaboration and teamwork",
+        "Recognizing and appreciating employee contributions",
+        "Providing opportunities for professional development and growth",
+        "Promoting work-life balance"
+      ],
+      icon: <Users className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are the benefits of laughter for reducing stress?",
+      answer: [
+        "Triggering the release of endorphins",
+        "Relaxing the body and mind",
+        "Boosting the immune system",
+        "Improving mood",
+        "Fostering social connections and bonding with others"
+      ],
+      icon: <Laugh className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "How can I practice self-compassion during challenging times?",
+      answer: [
+        "Treating yourself with kindness and understanding",
+        "Acknowledging your struggles without judgment",
+        "Validating your emotions",
+        "Offering yourself the same compassion and support you would to a friend in need"
+      ],
+      icon: <Heart className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are some signs that indicate I need to take a break and recharge?",
+      answer: [
+        "Feeling overwhelmed, fatigued, irritable, or unable to concentrate",
+        "Experiencing physical symptoms such as headaches or muscle tension",
+        "Noticing changes in sleep patterns or appetite"
+      ],
+      icon: <BatteryCharging className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "How does nature and spending time outdoors benefit mental well-being?",
+      answer: [
+        "Reducing stress levels",
+        "Improving mood",
+        "Promoting relaxation",
+        "Increasing physical activity",
+        "Fostering a sense of connection with the natural world",
+        "Providing opportunities for mindfulness and reflection"
+      ],
+      icon: <Trees className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "What are some strategies for managing anxiety?",
+      answer: [
+        "Deep breathing exercises",
+        "Mindfulness meditation",
+        "Practicing relaxation techniques",
+        "Challenging negative thoughts",
+        "Staying physically active",
+        "Seeking professional help",
+        "Using medication if prescribed by a healthcare provider"
+      ],
+      icon: <Brain className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "How does social media use impact mental health?",
+      answer: [
+        "Contributing to feelings of inadequacy, comparison, and FOMO (fear of missing out)",
+        "Increasing stress levels",
+        "Disrupting sleep patterns",
+        "Fostering addiction-like behaviors"
+      ],
+      icon: <MessageSquare className="h-5 w-5 text-purple-600" />
+    },
+    {
+      question: "How can I build resilience to better cope with life's challenges?",
+      answer: [
+        "Cultivating positive relationships",
+        "Maintaining a hopeful outlook",
+        "Practicing self-care",
+        "Developing problem-solving skills",
+        "Embracing change and adversity as opportunities for growth",
+        "Seeking support from others when needed"
+      ],
+      icon: <Clock className="h-5 w-5 text-purple-600" />
+    }
+  ];
+
   return (
-    <>
-      <div className="main-que-ans-con">
-        <div className="question-con">
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How do I manage stress in my daily life?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Deep breathing exercises</li>
-                  <li>Mindfulness meditation</li>
-                  <li>Regular physical activity</li>
-                  <li>Maintaining a healthy diet</li>
-                  <li>Setting boundaries</li>
-                  <li>
-                    Seeking support from friends, family, or a mental health
-                    professional
-                  </li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+    <div className="container mx-auto px-4 py-8">
+      <div className="text-center mb-12">
+        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-teal-600 mb-4">
+          Mental Health Resources
+        </h1>
+        <p className="text-slate-600 max-w-2xl mx-auto">
+          Find answers to common questions about mental health, stress management, and self-care
+        </p>
+      </div>
+
+      <div className="max-w-4xl mx-auto bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div className="bg-gradient-to-r from-purple-600/10 to-teal-600/10 p-6 rounded-t-xl">
+          <h2 className="text-2xl font-bold">Frequently Asked Questions</h2>
+          <p className="text-slate-600 mt-1">Explore these resources to support your mental wellness journey</p>
         </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are some tips for improving sleep quality?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Establish a consistent sleep schedule</li>
-                  <li>Create a relaxing bedtime routine</li>
-                  <li>
-                    Make your sleep environment comfortable and conducive to
-                    sleep
-                  </li>
-                  <li>Limit exposure to screens before bed</li>
-                  <li>Avoid caffeine and large meals close to bedtime</li>
-                  <li>Manage stress through relaxation techniques</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are some strategies to reduce stress at work?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Prioritize tasks</li>
-                  <li>Set boundaries</li>
-                  <li>Take short breaks</li>
-                  <li>Practice time management</li>
-                  <li>Seek support from colleagues or supervisors</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How can I incorporate mindfulness into my daily routine?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Practice mindfulness meditation</li>
-                  <li>Focus on the present moment</li>
-                  <li>
-                    Engage in mindful activities such as walking or eating
-                  </li>
-                  <li>
-                    Bring awareness to your thoughts and emotions without
-                    judgment
-                  </li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are some effective relaxation techniques for stress
-                    relief?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Deep breathing exercises</li>
-                  <li>Progressive muscle relaxation</li>
-                  <li>Guided imagery</li>
-                  <li>Aromatherapy</li>
-                  <li>Listening to calming music or nature sounds</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What role does nutrition play in stress management?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Providing the body with essential nutrients</li>
-                  <li>Stabilizing blood sugar levels</li>
-                  <li>Supporting brain health</li>
-                  <li>
-                    Influencing mood-regulating neurotransmitters like serotonin
-                    and dopamine
-                  </li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How can I set realistic goals to reduce stress?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Break larger tasks into smaller, manageable steps</li>
-                  <li>Prioritize tasks based on importance and urgency</li>
-                  <li>Set specific and achievable deadlines</li>
-                  <li>Celebrate progress along the way</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are the benefits of practicing gratitude for mental
-                    well-being?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Promoting positive emotions</li>
-                  <li>Reducing stress and anxiety</li>
-                  <li>Enhancing resilience</li>
-                  <li>Strengthening relationships</li>
-                  <li>Fostering a sense of contentment and fulfillment</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are some self-care practices for maintaining mental
-                    health?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Engaging in activities you enjoy</li>
-                  <li>Setting aside time for relaxation and leisure</li>
-                  <li>Getting enough sleep</li>
-                  <li>Eating nutritious foods</li>
-                  <li>Staying physically active</li>
-                  <li>Seeking professional help when needed</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are some effective coping strategies for dealing with
-                    unexpected challenges?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                Here are effective coping strategies for dealing with unexpected
-                challenges presented in an unordered list:
-                <ul>
-                  <li>Maintaining a positive outlook</li>
-                  <li>Staying flexible and adaptable</li>
-                  <li>Seeking solutions rather than dwelling on problems</li>
-                  <li>Practicing self-compassion</li>
-                  <li>Reaching out for support from others when needed</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How does journaling help in managing stress and emotions?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>
-                    Providing a safe outlet for expressing thoughts and feelings
-                  </li>
-                  <li>Gaining insight into triggers and patterns</li>
-                  <li>Organizing thoughts</li>
-                  <li>Problem-solving</li>
-                  <li>Promoting self-reflection and self-awareness</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are some mindfulness exercises I can practice
-                    throughout the day?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Mindful breathing</li>
-                  <li>Body scan meditation</li>
-                  <li>Mindful walking</li>
-                  <li>Mindful eating</li>
-                  <li>
-                    Taking mindful pauses to check in with your thoughts,
-                    emotions, and sensations
-                  </li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How can I create a supportive and stress-free work
-                    environment?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Fostering open communication</li>
-                  <li>Encouraging collaboration and teamwork</li>
-                  <li>Recognizing and appreciating employee contributions</li>
-                  <li>
-                    Providing opportunities for professional development and
-                    growth
-                  </li>
-                  <li>Promoting work-life balance</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are the benefits of laughter for reducing stress?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Triggering the release of endorphins</li>
-                  <li>Relaxing the body and mind</li>
-                  <li>Boosting the immune system</li>
-                  <li>Improving mood</li>
-                  <li>Fostering social connections and bonding with others</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How can I practice self-compassion during challenging times?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Treating yourself with kindness and understanding</li>
-                  <li>Acknowledging your struggles without judgment</li>
-                  <li>Validating your emotions</li>
-                  <li>
-                    Offering yourself the same compassion and support you would
-                    to a friend in need
-                  </li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are some signs that indicate I need to take a break and
-                    recharge?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>
-                    Feeling overwhelmed, fatigued, irritable, or unable to
-                    concentrate
-                  </li>
-                  <li>
-                    Experiencing physical symptoms such as headaches or muscle
-                    tension
-                  </li>
-                  <li>Noticing changes in sleep patterns or appetite</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How does nature and spending time outdoors benefit mental
-                    well-being?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Reducing stress levels</li>
-                  <li>Improving mood</li>
-                  <li>Promoting relaxation</li>
-                  <li>Increasing physical activity</li>
-                  <li>
-                    Fostering a sense of connection with the natural world
-                  </li>
-                  <li>
-                    Providing opportunities for mindfulness and reflection
-                  </li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    What are some strategies for managing anxiety?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Deep breathing exercises</li>
-                  <li>Mindfulness meditation</li>
-                  <li>Practicing relaxation techniques</li>
-                  <li>Challenging negative thoughts</li>
-                  <li>Staying physically active</li>
-                  <li>Seeking professional help</li>
-                  <li>
-                    Using medication if prescribed by a healthcare provider
-                  </li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How does social media use impact mental health?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>
-                    Contributing to feelings of inadequacy, comparison, and FOMO
-                    (fear of missing out)
-                  </li>
-                  <li>Increasing stress levels</li>
-                  <li>Disrupting sleep patterns</li>
-                  <li>Fostering addiction-like behaviors</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <Accordion allowToggle className="Names">
-            <AccordionItem className="NamesItem">
-              <h2>
-                <AccordionButton className="NamesButton">
-                  <Box as="span" flex="1" textAlign="left">
-                    How can I build resilience to better cope with life's
-                    challenges?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} className="NamesPanel">
-                <ul>
-                  <li>Cultivating positive relationships</li>
-                  <li>Maintaining a hopeful outlook</li>
-                  <li>Practicing self-care</li>
-                  <li>Developing problem-solving skills</li>
-                  <li>
-                    Embracing change and adversity as opportunities for growth
-                  </li>
-                  <li>Seeking support from others when needed</li>
-                </ul>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+        <div className="p-6">
+          {faqs.map((faq, index) => (
+            <div key={index} className="border-b border-slate-200">
+              <details className="group">
+                <summary className="flex items-center justify-between py-4 cursor-pointer hover:text-purple-600">
+                  <div className="flex items-center text-left">
+                    <span className="mr-3">{faq.icon}</span>
+                    <span className="font-medium">{faq.question}</span>
+                  </div>
+                  <ChevronDown className="h-5 w-5 text-slate-600 group-open:rotate-180 transition-transform" />
+                </summary>
+                <div className="pl-10 pr-4 pb-4 text-slate-600">
+                  <ul className="list-disc pl-5 space-y-1">
+                    {faq.answer.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </details>
+            </div>
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
-
-export default Resources;

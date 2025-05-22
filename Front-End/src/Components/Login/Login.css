@@ -4,10 +4,11 @@
   align-items: center;
   min-height: 100vh;
   padding: 2rem;
-  background: linear-gradient(135deg, #c2e9fb 0%, #a1c4fd 100%);
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
 }
 
 .login-box {
+  
   width: 100%;
   max-width: 450px;
   padding: 2.5rem;
