@@ -137,6 +137,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./SignIn.css";
 
 function Signin() {
@@ -147,6 +148,7 @@ function Signin() {
   });
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e, field) => {
     setSignInUser({ ...signInUser, [field]: e.target.value });
@@ -179,7 +181,7 @@ function Signin() {
 
       setMessage(response.data.message);
       setIsSuccess(response.status === 201);
-      console.log("User signed in successfully");
+      navigate("/login")
     } catch (error) {
       setMessage(error.response.data.message);
       setIsSuccess(false);
