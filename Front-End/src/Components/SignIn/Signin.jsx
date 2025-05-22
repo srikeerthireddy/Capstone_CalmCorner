@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/jsx-no-undef */
 // // eslint-disable-next-line no-unused-vars
 // import React, { useState } from "react";
 // import axios from "axios";
@@ -133,6 +135,7 @@
 // export default Signin;
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./SignIn.css";
 
@@ -199,7 +202,7 @@ function Signin() {
           )}
         </div>
 
-        <h1>Sign In</h1>
+        <h1>Sign Up</h1>
         <form onSubmit={handleSubmit}>
           <div className="signin-form-group">
             <label htmlFor="username">USER NAME</label>
@@ -255,7 +258,11 @@ function Signin() {
             />
             Continue with Google
           </button>
+          <p className="sign">
+                    Don't have an account? <Link to="/login">Login</Link>
+                  </p>
           </div>
+          
           
         </form>
       </div>

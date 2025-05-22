@@ -1,18 +1,15 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../images/!.jpg";
-import profileImage from "../images/profile.png";
-import AuthContext from "../AuthContext/AuthContext";
+import { Link } from "react-router-dom";
+import { Brain, Menu, X, ChevronDown } from "lucide-react";
+import AuthContext from "../AuthContext/AuthContext"; // Import AuthContext
 import Cookies from "js-cookie";
-import "./Header.css";
 
-function Header() {
-  const { isLoggedIn, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+export default function Header() {
+  const { isLoggedIn, logout } = useContext(AuthContext); // Use AuthContext
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showUserDetails, setShowUserDetails] = useState(false);
   const [userDetails, setUserDetails] = useState({ username: "", emailId: "" });
-  const [menuOpen, setMenuOpen] = useState(false);
-  const userRef = useRef();
+  const userRef = useRef(null);
 
   const fetchUserDetails = async () => {
     try {
@@ -28,7 +25,10 @@ function Header() {
         }
       }
     } catch (error) {
-      console.error("Error decoding token or fetching user information:", error);
+      console.error(
+        "Error decoding token or fetching user information:",
+        error
+      );
       setUserDetails({ username: "", emailId: "" });
     }
   };
@@ -42,218 +42,185 @@ function Header() {
   }, [isLoggedIn]);
 
   const handleLogout = () => {
-    logout();
+    logout(); // Use logout from AuthContext
     setUserDetails({ username: "", emailId: "" });
-    navigate("/");
-    setMenuOpen(false);
+    setShowUserDetails(false);
+    setIsMenuOpen(false);
   };
 
   const toggleUserDetails = () => {
     setShowUserDetails(!showUserDetails);
   };
 
-  const handleClickOutside = (event) => {
-    if (userRef.current && !userRef.current.contains(event.target)) {
-      setShowUserDetails(false);
-    }
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
+  // Close dropdown when clicking outside
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userRef.current && !userRef.current.contains(event.target)) {
+        setShowUserDetails(false);
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
   return (
-    <header className="header">
-      <div className="container">
-        <div className="header-content">
-          {/* Logo */}
-          <div className="logo-container">
-            <NavLink to="/" className="logo-link">
-              <img src={logo} alt="Calm Corner Logo" className="logo-image" />
-              <span className="logo-text">Calm Corner</span>
-            </NavLink>
+    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex items-center space-x-2">
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-teal-600 text-white">
+            <Brain className="w-5 h-5" />
           </div>
+          <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-teal-600">
+            Calm Corner
+          </span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="desktop-nav">
-            <NavLink 
-              to="/" 
-              className={({ isActive }) => 
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              HOME
-            </NavLink>
-            <NavLink 
-              to="/aboutus" 
-              className={({ isActive }) => 
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              ABOUT US
-            </NavLink>
-            <NavLink 
-              to="/wellnesshub" 
-              className={({ isActive }) => 
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              WELLNESS-HUB
-            </NavLink>
-            
-            {isLoggedIn ? (
-              <div className="user-profile" ref={userRef}>
-                <button
-                  onClick={toggleUserDetails}
-                  className="profile-button"
-                >
-                  <img
-                    src={profileImage}
-                    alt="Profile"
-                    className="profile-image"
-                  />
-                  <span className="username">
-                    {userDetails.username}
-                  </span>
-                  <svg
-                    className={`dropdown-arrow ${showUserDetails ? "rotate" : ""}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
-                  </svg>
-                </button>
-                
-                {showUserDetails && (
-                  <div className="user-dropdown">
-                    <div className="user-info">
-                      <p className="dropdown-username">{userDetails.username}</p>
-                      <p className="dropdown-email">{userDetails.emailId}</p>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="logout-button"
-                    >
-                      Logout
-                    </button>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-8">
+          <Link
+            to="/"
+            className="text-slate-700 hover:text-purple-600 font-medium transition-colors"
+          >
+            Home
+          </Link>
+          <Link
+            to="/aboutus"
+            className="text-slate-700 hover:text-purple-600 font-medium transition-colors"
+          >
+            About Us
+          </Link>
+          <Link
+            to="/wellnesshub"
+            className="text-slate-700 hover:text-purple-600 font-medium transition-colors"
+          >
+            Wellness Hub
+          </Link>
+
+          {isLoggedIn ? (
+            <div className="relative" ref={userRef}>
+              <button
+                onClick={toggleUserDetails}
+                className="flex items-center space-x-2 text-slate-700 hover:text-purple-600 transition-colors"
+              >
+                <div className="h-8 w-8 flex items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-teal-600 text-white border border-slate-200">
+                  {userDetails.username.charAt(0)}
+                </div>
+                <span className="font-medium">{userDetails.username}</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-300 ${
+                    showUserDetails ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {showUserDetails && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl p-4 border border-slate-200 animate-in fade-in-50 zoom-in-95">
+                  <div className="mb-4">
+                    <p className="text-slate-800 font-semibold">
+                      {userDetails.username}
+                    </p>
+                    <p className="text-slate-600 text-sm">
+                      {userDetails.emailId}
+                    </p>
                   </div>
-                )}
-              </div>
-            ) : (
-              <NavLink
-                to="/login"
-                className="get-started-button"
-              >
-                Get Started
-              </NavLink>
-            )}
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <div className="mobile-menu-button">
-            <button
-              onClick={toggleMenu}
-              className="hamburger-button"
+                  <button
+                    onClick={handleLogout}
+                    className="w-full bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white py-2 rounded-md transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white px-6 py-2 rounded-full font-medium transition-colors"
             >
-              <svg
-                className="hamburger-icon"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                ></path>
-              </svg>
-            </button>
-          </div>
+              Get Started
+            </Link>
+          )}
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <div className="flex items-center space-x-4 md:hidden">
+          <button
+            onClick={toggleMenu}
+            className="text-slate-700 hover:text-purple-600 transition-colors"
+          >
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="mobile-menu">
-          <div className="mobile-menu-items">
-            <NavLink
+      {isMenuOpen && (
+        <div className="md:hidden bg-white border-t border-slate-200 animate-in slide-in-from-top-5">
+          <div className="container mx-auto px-6 py-4 flex flex-col space-y-4">
+            <Link
               to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? "mobile-nav-link active"
-                  : "mobile-nav-link"
-              }
-              onClick={() => setMenuOpen(false)}
+              className="text-slate-700 hover:text-purple-600 font-medium py-2 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
             >
-              HOME
-            </NavLink>
-            <NavLink
+              Home
+            </Link>
+            <Link
               to="/aboutus"
-              className={({ isActive }) =>
-                isActive
-                  ? "mobile-nav-link active"
-                  : "mobile-nav-link"
-              }
-              onClick={() => setMenuOpen(false)}
+              className="text-slate-700 hover:text-purple-600 font-medium py-2 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
             >
-              ABOUT US
-            </NavLink>
-            <NavLink
+              About Us
+            </Link>
+            <Link
               to="/wellnesshub"
-              className={({ isActive }) =>
-                isActive
-                  ? "mobile-nav-link active"
-                  : "mobile-nav-link"
-              }
-              onClick={() => setMenuOpen(false)}
+              className="text-slate-700 hover:text-purple-600 font-medium py-2 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
             >
-              WELLNESS-HUB
-            </NavLink>
-            
+              Wellness Hub
+            </Link>
+
             {isLoggedIn ? (
-              <div className="mobile-user-section">
-                <div className="mobile-user-info">
-                  <img
-                    src={profileImage}
-                    alt="Profile"
-                    className="mobile-profile-image"
-                  />
-                  <div className="mobile-user-details">
-                    <div className="mobile-username">{userDetails.username}</div>
-                    <div className="mobile-email">{userDetails.emailId}</div>
+              <div className="flex flex-col space-y-4 pt-4 border-t border-slate-200">
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 flex items-center jzustify-center rounded-full bg-gradient-to-r from-purple-600 to-teal-600 text-white border border-slate-200">
+                    {userDetails.username.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="text-slate-800 font-semibold">
+                      {userDetails.username}
+                    </div>
+                    <div className="text-slate-600 text-sm">
+                      {userDetails.emailId}
+                    </div>
                   </div>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="mobile-logout-button"
+                  className="w-full bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white py-2 rounded-md transition-colors"
                 >
                   Logout
                 </button>
               </div>
             ) : (
-              <NavLink
+              <Link
                 to="/login"
-                className="mobile-get-started"
-                onClick={() => setMenuOpen(false)}
+                className="w-full bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white py-2 rounded-md text-center font-medium transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Get Started
-              </NavLink>
+              </Link>
             )}
           </div>
         </div>
@@ -261,5 +228,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

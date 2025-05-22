@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import "./Login.css"; // Import the CSS file
 import Cookies from "js-cookie";
 import AuthContext from "../AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 function Login() {
@@ -20,6 +21,7 @@ function Login() {
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAuthorFromToken = async () => {
@@ -74,36 +76,41 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/users/login",
-        loginUser
-      );
-      const data = response.data;
-      console.log(data);
+  e.preventDefault();
+  try {
+    const response = await axios.post(
+      "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/users/login",
+      loginUser
+    );
+    const data = response.data;
+    console.log(data);
 
-      if (response.status === 200) {
-        const { token } = data; // Extract token, username, and email from response
-        // console.log()
-        Cookies.set("token", token); // Store token in cookies
+    if (response.status === 200) {
+      const { token } = data;
 
-        login(token); // Call the login function with the token
-        setMessage(data.message);
-        setIsSuccess(true);
-      } else {
-        setMessage(data.message);
-        setIsSuccess(false);
-      }
-    } catch (error) {
-      setMessage(
-        error.response?.data?.message ||
-          "An error occurred while logging in. Please try again."
-      );
+      Cookies.set("token", token); // Store token in cookies
+
+      login(token); // Call login context function if needed
+      setMessage(data.message);
+      setIsSuccess(true);
+
+      // ✅ Redirect immediately after login
+      navigate("/");
+
+    } else {
+      setMessage(data.message);
       setIsSuccess(false);
-      console.error("An error occurred while logging in:", error);
     }
-  };
+  } catch (error) {
+    setMessage(
+      error.response?.data?.message ||
+      "An error occurred while logging in. Please try again."
+    );
+    setIsSuccess(false);
+    console.error("An error occurred while logging in:", error);
+  }
+};
+
 
   const handleGoogleLogin = () => {
     window.location.href =
@@ -168,7 +175,7 @@ function Login() {
         </div>
 
         <p className="sign">
-          Don't have an account? <Link to="/signin">Sign In</Link>
+          Don't have an account? <Link to="/signin">Sign Up</Link>
         </p>
       </div>
     </div>
