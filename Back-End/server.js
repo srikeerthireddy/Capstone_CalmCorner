@@ -93,7 +93,7 @@ const app = express();
 app.use(express.json());
 // Set up CORS with specific origin and credentials
 const corsOptions = {
-    origin: ['https://calmcorner-red.vercel.app ','http://localhost:5173',], // frontend origin
+    origin: ['https://calmcorner-red.vercel.app','http://localhost:5173',], // frontend origin
     credentials: true, // allow credentials (cookies, authorization headers)
   };
   app.use(cors(corsOptions));
