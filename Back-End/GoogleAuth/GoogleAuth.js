@@ -14,7 +14,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:5226/auth/google/callback",
+      callbackURL: "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -70,7 +70,7 @@ Auth.get(
 
 Auth.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "http://localhost:5173/login" }),
+  passport.authenticate("google", { failureRedirect: "https://calmcorner-red.vercel.app//login" }),
   (req, res) => {
     const user = req.user;
 
@@ -92,7 +92,7 @@ Auth.get(
     });
 
 
-    return res.redirect("http://localhost:5173/");
+    return res.redirect("https://calmcorner-red.vercel.app//");
 
   }
 );
