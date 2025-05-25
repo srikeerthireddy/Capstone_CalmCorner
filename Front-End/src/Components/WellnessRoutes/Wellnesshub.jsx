@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { NavLink, Routes, Route, useNavigate } from "react-router-dom";
-import AuthContext from "../AuthContext/AuthContext"; // Adjust the import path as needed
+import Cookies from "js-cookie";
+import AuthContext from "../AuthContext/AuthContext";
 import MoodEntry from "../WellnessHub/MoodEntry/MoodEntry";
 import TrackMood from "../WellnessHub/TrackMood/TrackMood";
 import Resources from "../WellnessHub/Resources/Resources";
@@ -8,9 +9,23 @@ import WellnessTips from "../WellnessHub/WellnessTips/WellnessTips";
 import UpdateRender from "../WellnessHub/UpdateEntry/UpdateEntry";
 
 function Wellnesshub() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, token, user, refreshAuth } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(!isLoggedIn);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    
+    const cookieToken = Cookies.get("token");
+    if (cookieToken && !isLoggedIn) {
+      refreshAuth();
+    }
+    
+    setIsModalOpen(!isLoggedIn);
+  }, [isLoggedIn, token, user, refreshAuth]);
+
+  useEffect(() => {
+    refreshAuth();
+  }, [refreshAuth]);
 
   const handleLoginRedirect = () => {
     setIsModalOpen(false);
@@ -104,6 +119,8 @@ function Wellnesshub() {
           </div>
         </div>
       )}
+      
+
     </div>
   );
 }

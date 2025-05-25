@@ -8,16 +8,22 @@ const userSchema = new mongoose.Schema({
   emailId: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
-    required: true,
+    required: function () {
+      return !this.googleId;
+    },
+  },
+  googleId: {
+    type: String,
   },
   profilePicture: {
     type: String,
   },
   moodEntry: [{ type: mongoose.Schema.Types.ObjectId, ref: "moodentries" }],
 });
-const userModel = mongoose.model("users", userSchema);
 
+const userModel = mongoose.model("users", userSchema);
 module.exports = userModel;

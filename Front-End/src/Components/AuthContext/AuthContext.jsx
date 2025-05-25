@@ -1,42 +1,68 @@
-// eslint-disable-next-line no-unused-vars
-import React, { createContext, useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
+import React, { createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
-// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  const login = (token, userData) => {
+    setIsLoggedIn(true);
+    setUser(userData);
+  };
+
+  const logout = async () => {
+    try {
+      await fetch("http://localhost:5226/api/users/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error("Logout error", err);
+    }
+
+    setIsLoggedIn(false);
+    setUser(null);
+  };
+
+  const checkAuthStatus = async () => {
+    try {
+      const res = await fetch("http://localhost:5226/api/users/auth/status", {
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        throw new Error("Not authenticated");
+      }
+
+      const data = await res.json();
+      setIsLoggedIn(true);
+      setUser(data.user);
+    } catch (err) {
+      setIsLoggedIn(false);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Check for user cookie on mount
-    const storedUsername = Cookies.get('username');
-    const storedEmailId = Cookies.get('emailId'); // Retrieve emailId from cookies
-
-    if (storedUsername && storedEmailId) {
-      setIsLoggedIn(true);
-
-    }
+    checkAuthStatus();
   }, []);
 
-  const login = (username, emailId) => {
-    Cookies.set('username', username);
-    Cookies.set('emailId', emailId); // Store emailId in cookies
-    setIsLoggedIn(true);
-  
-  };
-
-  const logout = () => {
-
-    Cookies.remove('username');
-    Cookies.remove('emailId'); // Remove emailId from cookies on logout
-    setIsLoggedIn(false);
- 
-  };
+  if (loading) return null;
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout}}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        user,
+        login,
+        logout,
+        refreshAuth: checkAuthStatus,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

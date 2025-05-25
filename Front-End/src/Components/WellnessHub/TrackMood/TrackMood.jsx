@@ -9,26 +9,15 @@ export default function TrackMood() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const getCookie = (name) => {
-    const cookieString = document.cookie;
-    const cookies = cookieString.split('; ').reduce((acc, curr) => {
-      const [key, val] = curr.split('=');
-      acc[key] = val;
-      return acc;
-    }, {});
-    return cookies[name];
-  };
 
   useEffect(() => {
     const fetchMoodEntries = async () => {
       try {
-        const token = getCookie("token");
         const response = await axios.get(
-          "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/moodEntry/userEntry",
+          "http://localhost:5226/api/moodEntry/userEntry",
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            withCredentials: true,
+
           }
         );
         const data = response.data;
@@ -47,13 +36,11 @@ export default function TrackMood() {
 
   const handleDelete = async (id) => {
     try {
-      const token = getCookie("token");
       const response = await axios.delete(
-        `https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/moodEntry/EntryDelete/${id}`,
+        `http://localhost:5226/api/moodEntry/EntryDelete/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
+
         }
       );
       if (response.status !== 200) {
@@ -90,7 +77,7 @@ export default function TrackMood() {
           </div>
           <h3 className="text-xl font-medium text-slate-700">No mood entries yet</h3>
           <p className="text-slate-500 mt-2 mb-6">Start tracking your moods to see them here</p>
-          <button 
+          <button
             onClick={() => navigate('/wellnesshub/mood')}
             className="bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white px-6 py-2 rounded-full font-medium transition-colors"
           >
@@ -100,11 +87,10 @@ export default function TrackMood() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {moodEntries.map((entry) => (
-            <div 
-              key={entry._id} 
+            <div
+              key={entry._id}
               className="bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
             >
-              {/* Header Section */}
               <div className="p-4 border-b border-slate-100">
                 <h3 className="text-lg font-semibold text-slate-800 truncate">{entry.Name}</h3>
                 <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-500">
@@ -123,13 +109,12 @@ export default function TrackMood() {
                 </div>
               </div>
 
-              {/* Content Section */}
               <div className="p-4">
                 <div className="mb-4">
                   <div className="flex flex-wrap gap-2 mb-3">
                     {getSelectedMoods(entry.MoodSelection).map((mood, index) => (
-                      <span 
-                        key={index} 
+                      <span
+                        key={index}
                         className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700 border border-purple-200"
                       >
                         {mood}
@@ -139,16 +124,15 @@ export default function TrackMood() {
                   <p className="text-sm text-slate-600 leading-relaxed line-clamp-3">{entry.EmotionEcho}</p>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex justify-end gap-2">
-                  <button 
+                  <button
                     onClick={() => handleUpdate(entry)}
                     className="group flex items-center px-3 py-1.5 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-lg text-sm font-medium transition-colors duration-200"
                   >
                     <Pencil className="h-4 w-4 mr-1 group-hover:scale-110 transition-transform" />
                     Update
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleDelete(entry._id)}
                     className="group flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-lg text-sm font-medium transition-colors duration-200"
                   >
