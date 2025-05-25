@@ -58,7 +58,7 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5226/auth/google";
+    window.location.href = "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/auth/google";
   };
 
   return (
