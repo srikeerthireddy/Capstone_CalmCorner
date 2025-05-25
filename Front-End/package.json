@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/styled": "^11.11.5",
     "@nextui-org/react": "^2.4.0",
+    "@react-oauth/google": "^0.12.2",
     "@tailwindcss/vite": "^4.1.7",
     "axios": "^1.6.8",
     "firebase": "^10.12.2",

@@ -9,8 +9,8 @@ export default function MoodEntryForm() {
   const navigate = useNavigate();
   const token = Cookies.get("token");
   const decodedToken = token ? jwtDecode(token) : { userId: "" };
-  
-  const [formData, setFormData] = useState({  
+
+  const [formData, setFormData] = useState({
     Name: "",
     Location: "",
     Date: "",
@@ -26,7 +26,7 @@ export default function MoodEntryForm() {
     EmotionEcho: "",
     userId: decodedToken.userId,
   });
-  
+
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -55,16 +55,40 @@ export default function MoodEntryForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
+      const {
+        Name,
+        Location,
+        Date,
+        Time,
+        MoodSelection,
+        EmotionEcho
+      } = formData;
+
       const response = await axios.post(
-        "https://s61-srikeerthi-capstone-calmcorner-5.onrender.com/api/moodEntry/EntryCreate",
-        formData,
-        { headers: { Authorization: `Bearer ${token}` } }
+        "http://localhost:5226/api/moodEntry/EntryCreate",
+        {
+          Name,
+          Location,
+          Date,
+          Time,
+          MoodSelection,
+          EmotionEcho,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: {
+              "Content-Type": "application/json",
+            }
+          },
+        }
       );
-      
+
       console.log("Mood entry added successfully", response.data);
-      
+
+      // reset form
       setFormData({
         Name: "",
         Location: "",
@@ -79,9 +103,8 @@ export default function MoodEntryForm() {
           Excited: false,
         },
         EmotionEcho: "",
-        userId: decodedToken.userId,
       });
-      
+
       setError("");
       navigate('/wellnesshub/track-mood');
     } catch (error) {
@@ -114,7 +137,7 @@ export default function MoodEntryForm() {
                 <span>{error}</span>
               </div>
             )}
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -131,7 +154,7 @@ export default function MoodEntryForm() {
                     className="w-full border border-slate-200 rounded-md p-2 focus:border-purple-500 focus:outline-none"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <label htmlFor="Location" className="flex items-center text-slate-700">
                     <MapPin className="h-4 w-4 mr-2" />
@@ -146,7 +169,7 @@ export default function MoodEntryForm() {
                     className="w-full border border-slate-200 rounded-md p-2 focus:border-purple-500 focus:outline-none"
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label htmlFor="Date" className="flex items-center text-slate-700">
@@ -163,7 +186,7 @@ export default function MoodEntryForm() {
                       className="w-full border border-slate-200 rounded-md p-2 focus:border-purple-500 focus:outline-none"
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label htmlFor="Time" className="flex items-center text-slate-700">
                       <Calendar className="h-4 w-4 mr-2" />
@@ -180,7 +203,7 @@ export default function MoodEntryForm() {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-3 pt-2">
                   <span className="text-slate-700 block mb-2">Mood Selection</span>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -205,7 +228,7 @@ export default function MoodEntryForm() {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="space-y-2 pt-2">
                   <label htmlFor="EmotionEcho" className="text-slate-700">
                     Emotion Echo
@@ -221,9 +244,9 @@ export default function MoodEntryForm() {
                   />
                 </div>
               </div>
-              
-              <button 
-                type="submit" 
+
+              <button
+                type="submit"
                 disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white py-2 rounded-md font-medium transition-colors"
               >

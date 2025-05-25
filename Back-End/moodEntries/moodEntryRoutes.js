@@ -8,11 +8,9 @@ require("dotenv").config();
 
 router.post("/EntryCreate", authenticate, async (req, res) => {
   try {
-    const { Name, Location, Date, Time, MoodSelection, EmotionEcho, userId } =
-      req.body;
-    //   const userId = req.user.userId; // Ensure userId is extracted from authenticated user
+    const { Name, Location, Date, Time, MoodSelection, EmotionEcho } = req.body;
+    const userId = req.user.userId;
 
-    // Create a new mood entry
     const newMoodEntry = new moodEntryModel({
       Name,
       Location,
@@ -23,25 +21,24 @@ router.post("/EntryCreate", authenticate, async (req, res) => {
       userId,
     });
 
-    //   getting existing user
-    const existingUser = await userModel.findById(userId).populate("");
+    const existingUser = await userModel.findById(userId);
     if (!existingUser) {
-      res.status(400).send({ msg: "User does not exists." });
+      return res.status(400).send({ msg: "User does not exist." });
     }
-    // Save the mood entry to the database
+
     await newMoodEntry.save();
     existingUser.moodEntry.push(newMoodEntry);
     await existingUser.save();
-    res
-      .status(201)
-      .json({
-        message: "Mood entry created successfully",
-        moodEntry: newMoodEntry,
-      });
+
+    res.status(201).json({
+      message: "Mood entry created successfully",
+      moodEntry: newMoodEntry,
+    });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
 router.get("/EntryRead", async (req, res) => {
   try {
     const moodEntries = await moodEntryModel.find();
@@ -93,12 +90,13 @@ router.delete("/EntryDelete/:id", async (req, res) => {
 
 router.get("/userEntry", authenticate, async (req, res) => {
   try {
-    // const userAllEntry = await userModel.find()
-    const token = req.headers.authorization;
-    const onlyToken = token.split(" ")[1];
-    const { userId } = jwt.verify(onlyToken, process.env.JWT_SECRET);
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({ message: "No token found in cookies" });
+    }
 
-    // find the user
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+
     const existingUserData = await userModel
       .findById(userId)
       .populate("moodEntry");

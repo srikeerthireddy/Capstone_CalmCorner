@@ -31,7 +31,6 @@
   font-weight: 600;
 }
 
-/* Form styling */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -65,7 +64,6 @@
   color: #A0AEC0;
 }
 
-/* Button styling */
 .login-button {
   width: 100%;
   padding: 0.9rem;
@@ -90,7 +88,6 @@
   transform: translateY(0);
 }
 
-/* Google authentication styling */
 .google-btn {
   margin-top: 1.5rem;
   text-align: center;
@@ -113,6 +110,12 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.signup-link {
+  color: #2563EB;
+  text-decoration: underline;
+}
+
+
 .google-login-button:hover {
   background-color: #F7FAFC;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -124,7 +127,6 @@
   margin-right: 10px;
 }
 
-/* Success/Error message styling */
 .message-succ {
   margin-bottom: 1.5rem;
 }
@@ -148,7 +150,6 @@
   border: 1px solid #FEB2B2;
 }
 
-/* Sign in link styling */
 .sign {
   margin-top: 1.5rem;
   text-align: center;
@@ -168,7 +169,6 @@
   text-decoration: underline;
 }
 
-/* Animation for form elements on load */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -211,7 +211,6 @@
   opacity: 0;
 }
 
-/* Responsive adjustments */
 @media (max-width: 576px) {
   .login-box {
     padding: 1.5rem;
@@ -237,7 +236,6 @@
   }
 }
 
-/* Accessibility focus styles */
 button:focus-visible,
 input:focus-visible,
 a:focus-visible {
@@ -245,7 +243,6 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-/* Small pulse animation on login button */
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(107, 70, 193, 0.4);

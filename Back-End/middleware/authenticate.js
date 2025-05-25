@@ -1,28 +1,28 @@
-const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET;
+const jwt = require("jsonwebtoken");
 
-const auth = (req, res, next) => {
-  const authHeader = req.header('Authorization');
-  
-  if (!authHeader) {
-    return res.status(401).send('Access denied. No token provided.');
+const authenticate = (req, res, next) => {
+  let token;
+
+  if (req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
   }
 
-  if (!authHeader.startsWith('Bearer ')) {
-    return res.status(400).send('Invalid token format.');
+  else if (req.cookies?.token) {
+    token = req.cookies.token;
   }
 
-  const token = authHeader.replace('Bearer ', '');
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    // console.log(decoded)
-    req.user = decoded; // Attach the decoded user to the request object
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { userId: decoded.id };
     next();
   } catch (error) {
-    console.error('Invalid token:', error);
-    res.status(401).send('Invalid token.');
+    console.error("Invalid token:", error.message);
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
 
-module.exports = auth;
+module.exports = authenticate;
