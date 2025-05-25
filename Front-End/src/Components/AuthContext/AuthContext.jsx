@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch("http://localhost:5226/api/users/logout", {
+      await fetch("https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/users/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const res = await fetch("http://localhost:5226/api/users/auth/status", {
+      const res = await fetch("https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/users/auth/status", {
         credentials: "include",
       });
 
