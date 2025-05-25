@@ -67,7 +67,7 @@ export default function MoodEntryForm() {
       } = formData;
 
       const response = await axios.post(
-        "http://localhost:5226/api/moodEntry/EntryCreate",
+        "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/EntryCreate",
         {
           Name,
           Location,
