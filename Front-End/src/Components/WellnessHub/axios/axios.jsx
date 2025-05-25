@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5226/api",
+  baseURL: "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api",
   withCredentials: true,
 });
 
