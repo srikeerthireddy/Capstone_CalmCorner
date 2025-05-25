@@ -67,7 +67,7 @@ export default function UpdateEntry() {
     e.preventDefault();
     try {
       await axios.put(
-       ` http://localhost:5226/api/moodEntry/EntryUpdate/${formData._id}`, 
+       ` https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/EntryUpdate/${formData._id}`, 
         formData
       );
       navigate('/wellnesshub/track-mood');
