@@ -14,7 +14,7 @@ export default function TrackMood() {
     const fetchMoodEntries = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5226/api/moodEntry/userEntry",
+          "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/userEntry",
           {
             withCredentials: true,
 
@@ -37,7 +37,7 @@ export default function TrackMood() {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5226/api/moodEntry/EntryDelete/${id}`,
+        `https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/EntryDelete/${id}`,
         {
           withCredentials: true,
 
