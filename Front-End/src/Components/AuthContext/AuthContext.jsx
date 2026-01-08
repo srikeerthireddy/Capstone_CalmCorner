@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch("https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/users/logout", {
+      await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const res = await fetch("https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/users/auth/status", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/auth/status`, {
         credentials: "include",
       });
 

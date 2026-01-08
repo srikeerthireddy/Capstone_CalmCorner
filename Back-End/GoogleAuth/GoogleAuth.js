@@ -14,7 +14,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/auth/google/callback",
+      callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5226'}/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -46,7 +46,7 @@ passport.deserializeUser((obj, done) => done(null, obj));
 
 Auth.use(
   session({
-    secret: "secret",
+    secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     saveUninitialized: false,
   })
@@ -70,7 +70,9 @@ Auth.get(
 
 Auth.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "https://calmcorner-red.vercel.app/login" }),
+  passport.authenticate("google", { 
+    failureRedirect: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/login` 
+  }),
   (req, res) => {
     const user = req.user;
 
@@ -92,7 +94,7 @@ Auth.get(
     });
 
 
-    return res.redirect("https://calmcorner-red.vercel.app/");
+    return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/`);
 
   }
 );

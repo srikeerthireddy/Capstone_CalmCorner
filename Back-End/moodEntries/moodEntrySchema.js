@@ -8,7 +8,7 @@ const moodEntrySchema=mongoose.Schema({
     },
     Location:{
         type:String,
-        required:true
+        required:false
     },
     Date:{
         type:String,

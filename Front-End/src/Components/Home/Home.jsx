@@ -23,7 +23,7 @@ export default function Home() {
 
         <div className="relative container mx-auto px-3 py-3 md:py-30 flex flex-col items-center text-center z-10 ">
           <div className="inline-block mb-6 p-3 bg-white rounded-2xl shadow-lg">
-            <div className="bg-gradient-to-r from-purple-600 to-teal-600 p-2 rounded-xl">
+            <div className="bg-gradient-to-r from-purple-600 to-teal-600 p-2 ">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function Home() {
 
       </section>
 
-      <section className=" bg-[linear-gradient(135deg,_#e0c3fc_0%,_#8ec5fc_100%)] p-6 rounded-xl shadow-md">
+      <section className=" bg-[linear-gradient(135deg,_#e0c3fc_0%,_#8ec5fc_100%)] p-6  shadow-md">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
             Why Mental Health <span className="text-purple-600">Matters</span>
@@ -113,7 +113,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-white to-slate-50 bg-[linear-gradient(135deg,_#e0c3fc_0%,_#8ec5fc_100%)] p-6 rounded-xl shadow-md">
+      <section className="py-20 bg-gradient-to-b from-white to-slate-50 bg-[linear-gradient(135deg,_#e0c3fc_0%,_#8ec5fc_100%)] p-6  shadow-md">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Our <span className="text-teal-600">Services</span>
@@ -160,7 +160,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 bg-slate-50 bg-[linear-gradient(135deg,_#e0c3fc_0%,_#8ec5fc_100%)] p-6 rounded-xl shadow-md">
+      <section className="py-20 bg-slate-50 bg-[linear-gradient(135deg,_#e0c3fc_0%,_#8ec5fc_100%)] p-6  shadow-md">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             What Our <span className="text-amber-600">Users Say</span>
@@ -204,7 +204,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative py-20 overflow-hidden bg-[linear-gradient(135deg,_#e0c3fc_0%,_#8ec5fc_100%)] p-6 rounded-xl shadow-md">
+      <section className="relative py-20 overflow-hidden bg-[linear-gradient(135deg,_#e0c3fc_0%,_#8ec5fc_100%)] p-6  shadow-md">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-600/90 to-teal-600/90"></div>
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 left-1/4 w-64 h-64 rounded-full bg-white opacity-10 blur-3xl"></div>

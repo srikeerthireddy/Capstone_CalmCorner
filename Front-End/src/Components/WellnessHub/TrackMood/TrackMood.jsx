@@ -13,17 +13,26 @@ export default function TrackMood() {
   useEffect(() => {
     const fetchMoodEntries = async () => {
       try {
+        console.log("Fetching mood entries from:", `${import.meta.env.VITE_API_BASE_URL}/moodEntry/userEntry`);
         const response = await axios.get(
-          "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/userEntry",
+          `${import.meta.env.VITE_API_BASE_URL}/moodEntry/userEntry`,
           {
             withCredentials: true,
-
           }
         );
+        console.log("Full response:", response);
+        console.log("Response data:", response.data);
+        console.log("Response data keys:", Object.keys(response.data || {}));
+        
         const data = response.data;
-        setMoodEntries(data.moodEntry || []);
+        // Try different possible property names
+        const entries = data.moodEntry || data.moodEntries || data.data || data || [];
+        console.log("Extracted entries:", entries);
+        setMoodEntries(Array.isArray(entries) ? entries : []);
       } catch (error) {
-        setError(error.message || "Failed to fetch mood entries");
+        console.error("Error fetching mood entries:", error);
+        console.error("Error response:", error.response?.data);
+        setError(error.response?.data?.message || error.message || "Failed to fetch mood entries");
       }
     };
 
@@ -37,7 +46,7 @@ export default function TrackMood() {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/EntryDelete/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/moodEntry/EntryDelete/${id}`,
         {
           withCredentials: true,
 
@@ -162,17 +171,17 @@ function getSelectedMoods(moodSelection) {
 function getEmojiForMood(mood) {
   switch (mood) {
     case 'Happy':
-      return '😄 Happy';
+      return 'Happy';
     case 'Sad':
-      return '😔 Sad';
+      return 'Sad';
     case 'Anxious':
-      return '😰 Anxious';
+      return 'Anxious';
     case 'Stressed':
-      return '🥵 Stressed';
+      return 'Stressed';
     case 'Neutral':
-      return '😌 Neutral';
+      return 'Neutral';
     case 'Excited':
-      return '🤩 Excited';
+      return 'Excited';
     default:
       return '';
   }

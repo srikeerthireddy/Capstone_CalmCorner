@@ -35,7 +35,7 @@ function Signin() {
 
     try {
       const response = await axios.post(
-        "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/users/signin",
+        `${import.meta.env.VITE_API_BASE_URL}/users/signin`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -53,7 +53,7 @@ function Signin() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/auth/google";
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
   };
 
   return (

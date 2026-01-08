@@ -7,5 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-],
+  ],
+  // Ensure environment variables are properly loaded
+  envPrefix: 'VITE_',
 })

@@ -58,7 +58,7 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/auth/google";
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
   };
 
   return (

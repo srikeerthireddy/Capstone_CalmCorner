@@ -100,9 +100,18 @@ router.get("/userEntry", authenticate, async (req, res) => {
     const existingUserData = await userModel
       .findById(userId)
       .populate("moodEntry");
-    res.send(existingUserData);
+    
+    if (!existingUserData) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "Mood entries retrieved successfully",
+      moodEntry: existingUserData.moodEntry || []
+    });
   } catch (error) {
-    res.status(401).send(error);
+    console.error("Error fetching user entries:", error);
+    res.status(401).json({ message: error.message || "Authentication failed" });
   }
 });
 

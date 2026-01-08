@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { ArrowLeft, Calendar, Clock, MapPin, User, Save, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, MapPin, User, Save, AlertCircle, Smile, Frown, Meh, Zap, ThermometerSun } from 'lucide-react';
 
 export default function UpdateEntry() {
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ export default function UpdateEntry() {
     e.preventDefault();
     try {
       await axios.put(
-       ` https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/EntryUpdate/${formData._id}`, 
+        `${import.meta.env.VITE_API_BASE_URL}/moodEntry/EntryUpdate/${formData._id}`, 
         formData
       );
       navigate('/wellnesshub/track-mood');
@@ -181,13 +181,13 @@ export default function UpdateEntry() {
                           onChange={() => handleCheckboxChange(mood)}
                           className="h-4 w-4 text-purple-600 border-slate-200 rounded focus:ring-purple-500"
                         />
-                        <label htmlFor={mood} className="cursor-pointer">
-                          {mood === "Happy" && "😄 Happy"}
-                          {mood === "Sad" && "😔 Sad"}
-                          {mood === "Anxious" && "😰 Anxious"}
-                          {mood === "Stressed" && "🥵 Stressed"}
-                          {mood === "Neutral" && "😌 Neutral"}
-                          {mood === "Excited" && "🤩 Excited"}
+                        <label htmlFor={mood} className="cursor-pointer flex items-center gap-2">
+                          {mood === "Happy" && <><Smile className="w-4 h-4" /> Happy</>}
+                          {mood === "Sad" && <><Frown className="w-4 h-4" /> Sad</>}
+                          {mood === "Anxious" && <><AlertCircle className="w-4 h-4" /> Anxious</>}
+                          {mood === "Stressed" && <><ThermometerSun className="w-4 h-4" /> Stressed</>}
+                          {mood === "Neutral" && <><Meh className="w-4 h-4" /> Neutral</>}
+                          {mood === "Excited" && <><Zap className="w-4 h-4" /> Excited</>}
                         </label>
                       </div>
                     ))}
