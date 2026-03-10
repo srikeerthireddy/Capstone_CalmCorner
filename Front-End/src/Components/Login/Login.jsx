@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import AuthContext from "../AuthContext/AuthContext";
 import axiosInstance from "../WellnessHub/axios/axios";
@@ -7,6 +7,9 @@ import "./Login.css";
 
 function Login() {
   const { login } = useContext(AuthContext);
+  const location = useLocation();
+  const signupMessage = location.state?.message;
+  const fromSignup = location.state?.signupSuccess;
   const [loginUser, setLoginUser] = useState({ username: "", emailId: "", password: "" });
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -29,7 +32,7 @@ function Login() {
         })
         .then((res) => {
           login(tokenFromGoogle, res.data.user);
-          setTimeout(() => navigate("/"), 300);
+          setTimeout(() => navigate("/wellnesshub"), 300);
         })
         .catch(() => {
           Cookies.remove("token");
@@ -47,10 +50,16 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axiosInstance.post("/users/login", loginUser);
+      Cookies.set("token", res.data.token, {
+        path: "/",
+        sameSite: "Lax",
+        secure: window.location.protocol === "https:",
+      });
       login(res.data.token, res.data.user);
       setMessage("Login successful");
       setIsSuccess(true);
-      navigate("/");
+      const redirectTo = location.state?.from || "/wellnesshub";
+      navigate(redirectTo);
     } catch (err) {
       setMessage(err.response?.data?.message || "Login error.");
       setIsSuccess(false);
@@ -58,12 +67,17 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/auth/google";
+    const authBase = import.meta.env.VITE_AUTH_BASE ||
+      (import.meta.env.DEV ? "http://localhost:5226" : "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com");
+    window.location.href = `${authBase}/auth/google`;
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
+        {fromSignup && signupMessage && !message && (
+          <div className="message success"><p>{signupMessage}</p></div>
+        )}
         {message && <div className={`message ${isSuccess ? "success" : "error"}`}><p>{message}</p></div>}
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>

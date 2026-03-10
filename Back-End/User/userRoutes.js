@@ -4,6 +4,7 @@ const userModel = require('../User/userSchema');
 const multer = require("multer");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authenticate = require("../middleware/authenticate");
 const path = require('path');
 const fs = require('fs');
 const { registerSchema, loginSchema } = require('../User/Validation');
@@ -66,8 +67,8 @@ router.post('/login', async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "None",
-      secure: true,
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      secure: process.env.NODE_ENV === "production",
     });
 
     res.status(200).json({
@@ -91,8 +92,21 @@ router.post('/logout', (req, res) => {
     res.status(200).json({ message: 'Logout successful' });
 });
 
+router.get("/me", authenticate, async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user.userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.get("/auth/status", (req, res) => {
-    const token = req.cookies.token;
+    let token = req.cookies?.token;
+    if (!token && req.headers.authorization?.startsWith("Bearer ")) {
+        token = req.headers.authorization.split(" ")[1];
+    }
     if (!token) return res.status(401).json({ message: "Not authenticated" });
 
     try {

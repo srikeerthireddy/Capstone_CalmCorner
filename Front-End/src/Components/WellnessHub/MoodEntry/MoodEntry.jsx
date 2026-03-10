@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../axios/axios";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { Calendar, Clock, MapPin, User, Send, AlertCircle } from 'lucide-react';
@@ -66,8 +66,8 @@ export default function MoodEntryForm() {
         EmotionEcho
       } = formData;
 
-      const response = await axios.post(
-        "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/EntryCreate",
+      const response = await axiosInstance.post(
+        "/moodEntry/EntryCreate",
         {
           Name,
           Location,
@@ -75,14 +75,6 @@ export default function MoodEntryForm() {
           Time,
           MoodSelection,
           EmotionEcho,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: {
-              "Content-Type": "application/json",
-            }
-          },
         }
       );
 
@@ -109,10 +101,11 @@ export default function MoodEntryForm() {
       navigate('/wellnesshub/track-mood');
     } catch (error) {
       console.error("Error adding the mood entry", error);
-      setError(
+      const backendError =
         error.response?.data?.message ||
-        "There was a problem submitting your mood entry. Please try again."
-      );
+        error.response?.data?.msg ||
+        "There was a problem submitting your mood entry. Please try again.";
+      setError(backendError);
     } finally {
       setIsSubmitting(false);
     }
@@ -248,7 +241,7 @@ export default function MoodEntryForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white py-2 rounded-md font-medium transition-colors"
+                className="w-full bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white py-2 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="inline mr-2 h-4 w-4" />
                 {isSubmitting ? "Submitting..." : "Submit Entry"}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../WellnessHub/axios/axios";
 import "./SignIn.css";
 
 function Signin() {
@@ -34,15 +34,16 @@ function Signin() {
     if (selectedFile) formData.append("profilePicture", selectedFile);
 
     try {
-      const response = await axios.post(
-        "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/users/signin",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+      const response = await axiosInstance.post(
+        "/users/signin",
+        formData
       );
 
       setMessage(response.data.message || "Account created successfully.");
       setIsSuccess(response.status === 201);
-      navigate("/login");
+      navigate("/login", {
+        state: { signupSuccess: true, message: "Account created successfully! Please log in." },
+      });
     } catch (error) {
       const errMsg =
         error.response?.data?.message || "An error occurred during sign-up.";
@@ -53,7 +54,9 @@ function Signin() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/auth/google";
+    const authBase = import.meta.env.VITE_AUTH_BASE ||
+      (import.meta.env.DEV ? "http://localhost:5226" : "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com");
+    window.location.href = `${authBase}/auth/google`;
   };
 
   return (

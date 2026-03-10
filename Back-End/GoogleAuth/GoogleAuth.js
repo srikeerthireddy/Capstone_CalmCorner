@@ -92,7 +92,7 @@ Auth.get(
     });
 
 
-    return res.redirect("https://calmcorner-red.vercel.app/");
+    return res.redirect("https://calmcorner-red.vercel.app/wellnesshub");
 
   }
 );

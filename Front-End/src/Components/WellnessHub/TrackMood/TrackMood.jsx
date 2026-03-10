@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import axiosInstance from '../axios/axios';
 import { Calendar, Clock, MapPin, Pencil, Trash2, AlertCircle } from 'lucide-react';
 
 export default function TrackMood() {
@@ -13,13 +12,7 @@ export default function TrackMood() {
   useEffect(() => {
     const fetchMoodEntries = async () => {
       try {
-        const response = await axios.get(
-          "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/userEntry",
-          {
-            withCredentials: true,
-
-          }
-        );
+        const response = await axiosInstance.get("/moodEntry/userEntry");
         const data = response.data;
         setMoodEntries(data.moodEntry || []);
       } catch (error) {
@@ -36,13 +29,7 @@ export default function TrackMood() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(
-        `https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/EntryDelete/${id}`,
-        {
-          withCredentials: true,
-
-        }
-      );
+      const response = await axiosInstance.delete(`/moodEntry/EntryDelete/${id}`);
       if (response.status !== 200) {
         throw new Error('Failed to delete entry');
       }

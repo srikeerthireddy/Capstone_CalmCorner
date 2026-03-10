@@ -23,7 +23,7 @@ router.post("/EntryCreate", authenticate, async (req, res) => {
 
     const existingUser = await userModel.findById(userId);
     if (!existingUser) {
-      return res.status(400).send({ msg: "User does not exist." });
+      return res.status(400).json({ message: "User does not exist. Please sign up and log in first." });
     }
 
     await newMoodEntry.save();
@@ -90,12 +90,12 @@ router.delete("/EntryDelete/:id", async (req, res) => {
 
 router.get("/userEntry", authenticate, async (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({ message: "No token found in cookies" });
-    }
-
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(401).json({ message: "No token found" });
     const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+
+    }
 
     const existingUserData = await userModel
       .findById(userId)

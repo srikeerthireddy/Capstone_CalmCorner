@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../axios/axios";
 import { ArrowLeft, Calendar, Clock, MapPin, User, Save, AlertCircle } from 'lucide-react';
 
 export default function UpdateEntry() {
@@ -66,10 +66,7 @@ export default function UpdateEntry() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
-       ` https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/moodEntry/EntryUpdate/${formData._id}`, 
-        formData
-      );
+      await axiosInstance.put(`/moodEntry/EntryUpdate/${formData._id}`, formData);
       navigate('/wellnesshub/track-mood');
     } catch (err) {
       console.log("Error updating entity:", err);

@@ -1,8 +1,12 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+// In dev (localhost), use relative /api so Vite proxy forwards to local backend - avoids CORS
+const API_BASE = import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? "/api" : "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api");
+
 const axiosInstance = axios.create({
-  baseURL: "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api",
+  baseURL: API_BASE,
   withCredentials: true,
 });
 

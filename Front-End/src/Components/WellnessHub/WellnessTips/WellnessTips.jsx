@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ExternalLink, BookOpen, PlayCircle, Heart } from "lucide-react";
 import ReactPlayer from "react-player/lazy";
+import wellnessTipsImage from "../../images/wellness-tips.jpg";
 
 export default function WellnessTips() {
   const articles = [
@@ -21,8 +22,7 @@ export default function WellnessTips() {
     {
       title: "Mental Disorders",
       description: "World Health Organization about Mental-Health Disorders",
-      image:
-        "https://www.voicesofyouth.org/sites/voy/files/images/2020-06/gettyimages-1044233906.jpg",
+      image: wellnessTipsImage,
       url: "https://www.who.int/news-room/fact-sheets/detail/mental-disorders",
     },
     {

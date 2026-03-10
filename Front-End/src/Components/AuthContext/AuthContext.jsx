@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
@@ -12,9 +13,13 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   };
 
+  // In dev (localhost), use relative /api so Vite proxy forwards to local backend - avoids CORS
+  const apiBase = import.meta.env.VITE_API_URL ||
+    (import.meta.env.DEV ? "/api" : "https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api");
+
   const logout = async () => {
     try {
-      await fetch("https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/users/logout", {
+      await fetch(`${apiBase}/users/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -28,8 +33,13 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const res = await fetch("https://s61-srikeerthi-capstone-calmcorner-6.onrender.com/api/users/auth/status", {
+      const token = Cookies.get("token");
+      const headers = {};
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const res = await fetch(`${apiBase}/users/auth/status`, {
         credentials: "include",
+        headers,
       });
 
       if (!res.ok) {
