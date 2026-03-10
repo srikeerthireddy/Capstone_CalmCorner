@@ -14,16 +14,6 @@ const moodEntryRoute = require("./moodEntries/moodEntryRoutes");
 
 const port = process.env.PORT || 5226;
 
-// Connect to database before starting server
-connectDB()
-  .then(() => {
-    console.log("✅ Database connection established");
-  })
-  .catch((error) => {
-    console.error("❌ Failed to connect to database. Server will still start but may not function properly.");
-    console.error("   Please check your MONGODB_URI in .env file");
-  });
-
 const app = express();
 
 app.use(express.json());
@@ -35,7 +25,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
-
 
 // Session middleware - must be before passport
 app.use(
@@ -73,15 +62,15 @@ app.use(GoogleAuth);
 app.use((err, req, res, next) => {
   console.error("Global error handler:", err);
   console.error("Error stack:", err.stack);
-  
-  // Don't send response if headers already sent
+
   if (res.headersSent) {
     return next(err);
   }
 
-  // Handle redirect errors
   if (req.path.includes("/auth/google/callback")) {
-    return res.redirect("https://calmcorner-red.vercel.app/login?error=server_error");
+    return res.redirect(
+      "https://calmcorner-red.vercel.app/login?error=server_error"
+    );
   }
 
   res.status(err.status || 500).json({
@@ -90,8 +79,19 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Connect to database first, then start server
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 
