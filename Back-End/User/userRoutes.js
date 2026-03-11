@@ -82,10 +82,13 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Login error:", error);
+    const msg = error.message?.includes("buffering") || error.message?.includes("timeout")
+      ? "Database connection issue. Please try again."
+      : error.message || "Login failed";
+    res.status(500).json({ message: msg });
   }
 });
-
 
 router.post('/logout', (req, res) => {
     res.clearCookie("token");
@@ -110,6 +113,9 @@ router.get("/auth/status", (req, res) => {
     if (!token) return res.status(401).json({ message: "Not authenticated" });
 
     try {
+        if (!process.env.JWT_SECRET) {
+            return res.status(500).json({ message: "Server configuration error" });
+        }
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         res.status(200).json({ loggedIn: true, user: decoded });
     } catch (err) {

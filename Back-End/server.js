@@ -52,6 +52,16 @@ app.get("/", (req, res) => {
   });
 });
 
+// Ensure DB is connected before handling API requests
+app.use("/api", (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      message: "Database is connecting. Please try again in a moment.",
+    });
+  }
+  next();
+});
+
 app.use("/api/users", userRoute);
 app.use("/api/resource", resourceRoute);
 app.use("/api/moodEntry", moodEntryRoute);
@@ -78,6 +88,14 @@ app.use((err, req, res, next) => {
     error: process.env.NODE_ENV === "development" ? err.stack : undefined,
   });
 });
+
+// Validate required env vars before starting
+const requiredEnvVars = ["MONGODB_URI", "JWT_SECRET"];
+const missingVars = requiredEnvVars.filter((v) => !process.env[v]);
+if (missingVars.length > 0) {
+  console.error("❌ Missing required environment variables:", missingVars.join(", "));
+  process.exit(1);
+}
 
 // Connect to database first, then start server
 const startServer = async () => {
